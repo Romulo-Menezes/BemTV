@@ -1,0 +1,8 @@
+<div>
+  <img src="BemTV.svg" width="50" class="p-1">
+  @if(auth.isLoggedIn)
+    <a href="{{ route('sessions/destroy') }}">logout</a>
+  @else
+    <a href="{{ route('sessions/create') }}">login</a>
+  @endif
+</div>

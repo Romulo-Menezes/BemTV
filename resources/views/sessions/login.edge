@@ -1,0 +1,9 @@
+@layout('layouts/main')
+
+@section('home')
+<form method="POST" action="{{ route('sessions/store')}}">
+  <input type="email" name="email" placeholder="E-mail">
+  <input type="password" name="password" placeholder="Senha">
+  <button type="submit">Entrar</button>
+</form>
+@endsection

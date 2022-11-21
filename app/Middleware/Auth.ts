@@ -49,6 +49,8 @@ export default class AuthMiddleware {
     /**
      * Unable to authenticate using any guard
      */
+
+    /*   ALTERAÇÃO MINHA :)
     throw new AuthenticationException(
       'Unauthorized access',
       'E_UNAUTHORIZED_ACCESS',
@@ -56,6 +58,7 @@ export default class AuthMiddleware {
       this.redirectTo,
     )
   }
+  */
 
   /**
    * Handle request
