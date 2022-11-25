@@ -1,0 +1,11 @@
+@layout('layouts/main')
+
+@section('body')
+<h1>Criar Conta</h1>
+<form method="POST" action="{{ route('user/store')}}">
+  <input type="email" name="email" placeholder="E-mail">
+  <input type="password" name="password" placeholder="Senha">
+  <input type="password" name="confirm_password" placeholder="Confirmar senha">
+  <button type="submit">Criar</button>
+</form>
+@endsection

@@ -22,8 +22,11 @@ import Route from '@ioc:Adonis/Core/Route'
 
 Route.get('/', async ({ view }) => {
   return view.render('home')
-}).middleware('auth')
+})
 
 Route.get('/login', 'SessionsController.create').as('sessions/create')
 Route.post('/login', 'SessionsController.store').as('sessions/store')
 Route.get('/logout', 'SessionsController.destroy').as('sessions/destroy')
+
+Route.get('/cadastro', 'UsersController.create').as('user/create')
+Route.post('/cadastro', 'UsersController.store').as('user/store')

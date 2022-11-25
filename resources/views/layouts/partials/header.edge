@@ -1,8 +1,22 @@
-<div>
-  <img src="BemTV.svg" width="50" class="p-1">
-  @if(auth.isLoggedIn)
-    <a href="{{ route('sessions/destroy') }}">logout</a>
-  @else
-    <a href="{{ route('sessions/create') }}">login</a>
-  @endif
-</div>
+<header class="flex justify-between bg-lime-300">
+  <div class="flex pl-10 pt-1">
+    <a href="/" title="Home">
+      <img src="BemTV.svg" width="50">
+    </a>
+  </div>
+    <ul class="flex m-5 ">
+      @if(auth.isLoggedIn)
+
+        <li class="pr-10">Editar Perfil</li>
+
+        <a href="{{ route('sessions/destroy') }}">
+          <li class="pr-10">Logout</li>
+        </a>
+
+      @else
+        <a href="{{ route('sessions/create') }}">
+          <li class="pr-10">Login</li>
+        </a>
+      @endif
+    </ul>
+</header>
