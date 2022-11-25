@@ -6,9 +6,9 @@
   </div>
     <ul class="flex m-5 ">
       @if(auth.isLoggedIn)
-
-        <li class="pr-10">Editar Perfil</li>
-
+        <a href="{{route('editProfile/create')}}">
+          <li class="pr-10">Editar Perfil</li>
+        </a>
         <a href="{{ route('sessions/destroy') }}">
           <li class="pr-10">Logout</li>
         </a>
