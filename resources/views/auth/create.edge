@@ -1,11 +1,31 @@
 @layout('layouts/main')
 
 @section('body')
-<h1>Login</h1>
-<form method="POST" action="{{ route('auth/store')}}">
-  <input type="email" name="email" placeholder="E-mail">
-  <input type="password" name="password" placeholder="Senha">
-  <button type="submit">Entrar</button>
-</form>
-<a href="{{ route('user/create') }}">cadastre-se</a>
+<div class="flex justify-center pt-10">
+  <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8">
+    <form class="space-y-6" method="POST" action="{{ route('auth/store')}}">
+        <h5 class="text-xl font-medium text-gray-900">Login</h5>
+        <div>
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Seu e-mail</label>
+            <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="e-mail" required>
+        </div>
+        <div>
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Sua senha</label>
+            <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+        </div>
+        <div class="flex items-start">
+            <div class="flex items-start">
+                <div class="flex items-center h-5">
+                    <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300">
+                </div>
+                <label for="remember" class="ml-2 text-sm font-medium text-gray-900">Lembar de mim</label>
+            </div>
+        </div>
+        <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center :bg-blue-600">Entrar</button>
+        <div class="text-sm font-medium text-gray-500">
+            Não possui conta? <a href="{{ route('user/create') }}" class="text-blue-700 hover:underline">Crie sua conta</a>
+        </div>
+    </form>
+  </div>
+</div>
 @endsection
