@@ -2,7 +2,7 @@
 
 @section('body')
 <h1>Editar Perfil</h1>
-<form method="post" action="{{ route('editProfile/update')}}">
+<form method="post" action="{{ route('user/update')}}">
   <label for="first_name">Editar nome:</label>
   <input type="text" name="first_name" placeholder="{{auth.user.first_name != null?auth.user.first_name:'Nome'}}">
   <label for="last_name">Editar Sobrenome:</label>

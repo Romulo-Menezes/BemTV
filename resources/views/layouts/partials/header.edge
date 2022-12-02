@@ -6,15 +6,15 @@
   </div>
     <ul class="flex m-5 ">
       @if(auth.isLoggedIn)
-        <a href="{{route('editProfile/create')}}">
+        <a href="{{route('user/edit')}}">
           <li class="pr-10">Editar Perfil</li>
         </a>
-        <a href="{{ route('sessions/destroy') }}">
+        <a href="{{ route('auth/destroy') }}">
           <li class="pr-10">Logout</li>
         </a>
 
       @else
-        <a href="{{ route('sessions/create') }}">
+        <a href="{{ route('auth/create') }}">
           <li class="pr-10">Login</li>
         </a>
       @endif

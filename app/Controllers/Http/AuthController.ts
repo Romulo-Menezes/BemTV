@@ -2,9 +2,9 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Hash from '@ioc:Adonis/Core/Hash'
 import User from 'App/Models/User'
 
-export default class SessionsController {
+export default class AuthController {
   public async create ( { view }: HttpContextContract ) {
-    return view.render('sessions/login')
+    return view.render('auth/create')
   }
 
   public async store ( { auth, request, response }: HttpContextContract ) {
@@ -12,12 +12,12 @@ export default class SessionsController {
     const password = request.input('password')
 
     const user = await User
-    .query()
-    .where('email', email)
-    .firstOrFail()
+      .query()
+      .where('email', email)
+      .firstOrFail()
 
     if (!(await Hash.verify(user.password, password))) {
-      return response.redirect().toRoute('sessions/create')
+      return response.redirect().toRoute('auth/create')
     }
     await auth.use('web').login(user)
     response.redirect().toRoute('/')
