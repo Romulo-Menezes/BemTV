@@ -1,5 +1,3 @@
-import Alpine from 'alpinejs'
-
 import '../css/app.css'
+import 'flowbite'
 
-Alpine.start()

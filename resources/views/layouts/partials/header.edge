@@ -1,22 +1,38 @@
-<header class="flex justify-between bg-lime-300">
-  <div class="flex pl-10 pt-1">
-    <a href="/" title="Home">
-      <img src="BemTV.svg" width="50">
-    </a>
-  </div>
-    <ul class="flex m-5 ">
+<nav class="bg-lime-400 border-gray-200 px-2 sm:px-4 py-2.5">
+  <div class="container flex flex-wrap items-center justify-between mx-auto">
+  <a href="/" class="flex items-center">
+      <img src="BemTV.svg" class="h-6 mr-3 sm:h-9" alt="BemTV" />
+      <span class="self-center text-xl font-semibold whitespace-nowrap">BemTV</span>
+  </a>
+  <div class="flex items-center md:order-2">
+      <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+        <span class="sr-only">Menu do usuário</span>
+        <img class="w-8 h-8 rounded-full" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="user photo">
+      </button>
+      <!-- Dropdown menu -->
       @if(auth.isLoggedIn)
-        <a href="{{route('user/edit')}}">
-          <li class="pr-10">Editar Perfil</li>
-        </a>
-        <a href="{{ route('auth/destroy') }}">
-          <li class="pr-10">Logout</li>
-        </a>
-
+        <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow" id="user-dropdown">
+          <div class="px-4 py-3">
+            <span class="block text-sm text-gray-900">{{ auth.user.first_name }} {{ auth.user.last_name }}</span>
+            <span class="block text-sm font-medium text-gray-500 truncate">{{ auth.user.email }}</span>
+          </div>
+          <ul class="py-1" aria-labelledby="user-menu-button">
+            <li>
+              <a href="{{route('user/edit')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Editar perfil</a>
+            </li>
+            <li>
+              <a href="{{ route('auth/destroy') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+            </li>
+          </ul>
+        </div>
       @else
-        <a href="{{ route('auth/create') }}">
-          <li class="pr-10">Login</li>
-        </a>
+      <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow" id="user-dropdown">
+        <ul class="py-1" aria-labelledby="user-menu-button">
+          <li>
+            <a href="{{ route('auth/create') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Login</a>
+          </li>
+        </ul>
+      </div>
       @endif
-    </ul>
-</header>
+  </div>
+</nav>
