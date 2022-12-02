@@ -10,6 +10,8 @@ export default class AuthController {
   public async store ( { auth, request, response }: HttpContextContract ) {
     const email = request.input('email')
     const password = request.input('password')
+    const remember = request.input('remember')
+    const rememberMe = remember != undefined? true : false
 
     const user = await User
       .query()
@@ -19,7 +21,7 @@ export default class AuthController {
     if (!(await Hash.verify(user.password, password))) {
       return response.redirect().toRoute('auth/create')
     }
-    await auth.use('web').login(user)
+    await auth.use('web').login(user, rememberMe)
     response.redirect().toRoute('/')
 
   }
