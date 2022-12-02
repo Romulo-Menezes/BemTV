@@ -27,7 +27,7 @@ export default class UsersController {
   }
 
   public async update ( { auth, request,response }: HttpContextContract ) {
-    const firstName = request.input('first_name')
+    const firstName = request.input('name')
     const lastName = request.input('last_name')
     const email = request.input('email')
     const password = request.input('password')
