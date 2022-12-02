@@ -12,6 +12,8 @@ export default class UsersController {
   }
 
   public async store ( { request, response } ) {
+    const name = request.input('name')
+    const lastName = request.input('last_name')
     const email = request.input('email')
     const password = request.input('password')
     const confirmPassword = request.input('confirm_password')
@@ -19,8 +21,7 @@ export default class UsersController {
     if (password != confirmPassword){
       response.redirect().toRoute('/cadastro')
     }
-
-    await User.create( {email, password} )
+    await User.create( {email: email, password: password, first_name: name, last_name: lastName} )
 
     response.redirect().toRoute('/login')
   }
