@@ -7,23 +7,28 @@ export default class AuthController {
     return view.render('auth/create')
   }
 
-  public async store ( { auth, request, response }: HttpContextContract ) {
+  public async store ( { auth, request, view }: HttpContextContract ) {
     const email = request.input('email')
     const password = request.input('password')
     const remember = request.input('remember')
     const rememberMe = remember != undefined? true : false
 
-    const user = await User
+    try{
+      const user = await User
       .query()
       .where('email', email)
       .firstOrFail()
 
-    if (!(await Hash.verify(user.password, password))) {
-      return response.redirect().toRoute('auth/create')
+      if (!(await Hash.verify(user.password, password))) {
+        return view.render('auth/create', { error: true })
+      }
+      await auth.use('web').login(user, rememberMe)
+      return view.render('index', { successLogin: true })
+      
+    } catch (error) {
+      console.log(error)
+      return view.render('auth/create', { error: true })
     }
-    await auth.use('web').login(user, rememberMe)
-    response.redirect().toRoute('/')
-
   }
 
   public async destroy ( {auth,  response }: HttpContextContract ) {
