@@ -70,6 +70,7 @@
     "@adonisjs/repl": "^3.1.11",
     "@adonisjs/session": "^6.4.0",
     "@adonisjs/shield": "^7.1.0",
+    "@adonisjs/validator": "^12.4.1",
     "@adonisjs/view": "^6.2.0",
     "flowbite": "^1.5.4",
     "luxon": "^3.1.0",
