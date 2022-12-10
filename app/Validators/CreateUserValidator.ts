@@ -42,9 +42,10 @@ export default class CreateUserValidator {
     'lastName.maxLength': 'O tamanho máximo de um sobrenome é de 32 caracteres.',
     'email.required': 'Seu e-mail é obrigatório para o cadastro!',
     'email.unique': 'Endereço de e-mail já cadastrado!',
+    'email.email': 'Formato de e-mail inválido!',
     'password.required': 'Sua senha é obrigatório para o cadastro!',
     'passwordConfirmation.confirmed': 'Você inseriu senhas diferentes!',
     'password.maxLength': 'O tamanho máximo de uma senha é de 16 caracteres.',
-    'password.minLength': 'O tamanho mínimo deu uma senha é de 8 caracteres.',
+    'password.minLength': 'O tamanho mínimo de uma senha é de 8 caracteres.',
   }
 }
