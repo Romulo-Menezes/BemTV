@@ -1,6 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
+import UpdateUserValidator from 'App/Validators/UpdateUserValidator'
 
 export default class UsersController {
   public async create({ view }: HttpContextContract) {
@@ -24,22 +25,22 @@ export default class UsersController {
     return view.render('user/update')
   }
 
-  public async update({ auth, request, response, view }: HttpContextContract) {
+  public async update({ auth, request, session, response }: HttpContextContract) {
+    const payload = await request.validate(UpdateUserValidator)
+    const { firstName, lastName, email, password } = payload
     try {
-      const firstName = request.input('name')
-      const lastName = request.input('last_name')
-      const email = request.input('email')
-      const password = request.input('password')
       const user = await User.findByOrFail('email', auth.user?.email)
       user.first_name = firstName !== null ? firstName : user.first_name
       user.last_name = lastName !== null ? lastName : user.last_name
       user.email = email !== null ? email : user.email
       user.password = password !== null ? password : user.password
       await user.save()
-      return response.redirect().toRoute('user/edit')
+      session.flash('success', 'Informação(ões) atualizada(s) com sucesso!')
+      return response.redirect().back()
     } catch (error) {
       console.log(error.messages)
-      return view.render('user/update', { errorEmail: true })
+      session.flash('errors.update', 'Ocorreu um erro ao tentar editar.')
+      return response.redirect().back()
     }
   }
 }
