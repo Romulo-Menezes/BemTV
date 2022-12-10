@@ -7,7 +7,7 @@ export default class AuthController {
     return view.render('auth/create')
   }
 
-  public async store({ auth, request, view }: HttpContextContract) {
+  public async store({ auth, request, session, response }: HttpContextContract) {
     const email = request.input('email')
     const password = request.input('password')
     const remember = request.input('remember')
@@ -15,13 +15,15 @@ export default class AuthController {
     try {
       const user = await User.query().where('email', email).firstOrFail()
       if (!(await Hash.verify(user.password, password))) {
-        return view.render('auth/create', { error: true })
+        session.flash('errors', 'Usuário e/ou senha inválido!')
+        return response.redirect().back()
       }
       await auth.use('web').login(user, rememberMe)
-      return view.render('index', { successLogin: true })
+      session.flash('success', 'Login efetuado com sucesso!')
+      return response.redirect().toPath('/')
     } catch (error) {
-      console.log(error)
-      return view.render('auth/create', { error: true })
+      session.flash('errors', 'Usuário e/ou senha inválido!')
+      return response.redirect().back()
     }
   }
 
