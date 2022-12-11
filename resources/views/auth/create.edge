@@ -21,11 +21,11 @@
         <h5 class="text-xl font-medium text-gray-900">Login</h5>
         @if(flashMessages.has('errors'))
           <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Seu nome</label>
+            <label for="email" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Seu e-mail</label>
             <input type="email" name="email" id="email" placeholder="E-mail" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" required>
           </div>
           <div>
-            <label for="password" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Seu nome</label>
+            <label for="password" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Sua senha</label>
             <input type="password" name="password" id="password" placeholder="••••••••" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" required>
             <p class="mt-2 text-sm text-red-600 dark:text-red-500"> {{ flashMessages.get('errors') }} </p>
           </div>
@@ -51,7 +51,7 @@
         <div class="text-sm font-medium text-gray-500">
             Não possui conta? <a href="{{ route('user/create') }}" class="text-blue-700 hover:underline">Crie sua conta</a>
         </div>
-    </form>
-  </div>
+      </form>
+    </div>
 </div>
 @endsection

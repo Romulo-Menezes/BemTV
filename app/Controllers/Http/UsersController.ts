@@ -30,10 +30,10 @@ export default class UsersController {
     const { firstName, lastName, email, password } = payload
     try {
       const user = await User.findByOrFail('email', auth.user?.email)
-      user.first_name = firstName !== null ? firstName : user.first_name
-      user.last_name = lastName !== null ? lastName : user.last_name
-      user.email = email !== null ? email : user.email
-      user.password = password !== null ? password : user.password
+      user.first_name = firstName ?? user.first_name
+      user.last_name = lastName ?? user.last_name
+      user.email = email ?? user.email
+      user.password = password ?? user.password
       await user.save()
       session.flash('success', 'Informação(ões) atualizada(s) com sucesso!')
       return response.redirect().back()
