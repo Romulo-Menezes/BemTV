@@ -15,6 +15,7 @@ export default class AuthController {
     try {
       const user = await User.query().where('email', email).firstOrFail()
       if (!(await Hash.verify(user.password, password))) {
+        session.flashAll()
         session.flash('errors', 'Usuário e/ou senha inválido!')
         return response.redirect().back()
       }
@@ -22,6 +23,7 @@ export default class AuthController {
       session.flash('success', 'Login efetuado com sucesso!')
       return response.redirect().toPath('/')
     } catch (error) {
+      session.flashAll()
       session.flash('errors', 'Usuário e/ou senha inválido!')
       return response.redirect().back()
     }
