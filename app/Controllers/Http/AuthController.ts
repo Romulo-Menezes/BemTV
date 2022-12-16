@@ -1,6 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Hash from '@ioc:Adonis/Core/Hash'
 import User from 'App/Models/User'
+import LoginValidator from 'App/Validators/LoginValidator'
 
 export default class AuthController {
   public async create({ view }: HttpContextContract) {
@@ -8,8 +9,8 @@ export default class AuthController {
   }
 
   public async store({ auth, request, session, response }: HttpContextContract) {
-    const email = request.input('email')
-    const password = request.input('password')
+    const payload = await request.validate(LoginValidator)
+    const { email, password } = payload
     const remember = request.input('remember')
     const rememberMe = remember !== undefined ? true : false
     try {
