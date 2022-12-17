@@ -1,72 +1,52 @@
 @layout('layouts/main')
+@set('title', 'Cadastrar')
 
 @section('body')
 <div class="flex justify-center pt-10">
   <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8">
     <form class="space-y-6" method="POST" action="{{ route('user/store')}}">
         <h5 class="text-xl font-medium text-gray-900">Criar conta</h5>
-        @if(flashMessages.has('errors.firstName'))
-          <div>
-            <label for="firstName" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Seu nome</label>
-            <input type="text" name="firstName" value="{{ flashMessages.get('firstName', '') }}" id="firstName" placeholder="Nome" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" required>
-            <p class="mt-2 text-sm text-red-600 dark:text-red-500"> {{ flashMessages.get('errors.firstName') }} </p>
-          </div>
-        @else
-          <div>
-            <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900">Seu nome</label>
-           <input type="text" name="firstName" id="firstName" value="{{ flashMessages.get('firstName', '') }}" placeholder="Nome" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-         </div>
-        @endif
-        @if(flashMessages.has('errors.lastName'))
-          <div>
-            <label for="lastName" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Seu sobrenome</label>
-            <input type="text" name="lastName" id="lastName" value="{{ flashMessages.get('lastName', '') }}" placeholder="Sobrenome" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" required>
-            <p class="mt-2 text-sm text-red-600 dark:text-red-500"> {{ flashMessages.get('errors.lastName') }} </p>
-          </div>
-        @else
-          <div>
-            <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900">Seu sobrenome</label>
-            <input type="text" name="lastName" id="lastName" value="{{ flashMessages.get('lastName', '') }}" placeholder="Sobrenome" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-          </div>
-        @endif
-        @if(flashMessages.has('errors.email'))
-          <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Seu e-mail</label>
-            <input type="email" name="email" id="email" value="{{ flashMessages.get('email', '') }}" placeholder="E-mail" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" required>
-            <p class="mt-2 text-sm text-red-600 dark:text-red-500"> {{ flashMessages.get('errors.email') }} </p>
-          </div>
-        @else
-          <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Seu e-mail</label>
-            <input type="email" name="email" id="email" value="{{ flashMessages.get('email', '') }}" placeholder="E-mail" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-          </div>
-        @endif
-        @if(flashMessages.has('errors.password') || flashMessages.has('errors.passwordConfirmation'))
-          <div>
-            <label for="password" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Sua senha</label>
-            <input type="password" name="password" id="password" value="{{ flashMessages.get('password', '') }}" placeholder="••••••••" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" required>
-          </div>
-          <div>
-            <label for="passwordConfirmation" class="block mb-2 text-sm font-medium text-red-700 dark:text-red-500">Confirmar sua senha</label>
-            <input type="password" name="passwordConfirmation" id="passwordConfirmation" value="{{ flashMessages.get('passwordConfirmation', '') }}" placeholder="••••••••" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded-lg focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 block w-full p-2.5 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500" required>
-          </div>
-          <p class="mt-2 text-sm text-red-600 dark:text-red-500">
-            @if(flashMessages.has('errors.password'))
-            {{ flashMessages.get('errors.password') }}
-            @else
-            {{ flashMessages.get('errors.passwordConfirmation') }}
-            @endif
-          </p>
-        @else
-          <div>
-            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Sua senha</label>
-            <input type="password" name="password" id="password" value="{{ flashMessages.get('password', '') }}" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-          </div>
-          <div>
-            <label for="passwordConfirmation" class="block mb-2 text-sm font-medium text-gray-900">Confirmar sua senha</label>
-            <input type="password" name="passwordConfirmation" id="passwordConfirmation" value="{{ flashMessages.get('passwordConfirmation', '') }}"  placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-          </div>
-        @endif
+
+        @!component('layouts/components/input', {
+          type: 'text',
+          name: 'firstName',
+          text: 'Seu nome',
+          placeholder: 'Nome',
+          value: true,
+          required: true })
+
+        @!component('layouts/components/input', {
+          type: 'text',
+          name: 'lastName',
+          text: 'Seu sobrenome',
+          placeholder: 'Sobrenome',
+          value: true,
+          required: true })
+
+        @!component('layouts/components/input', {
+          type: 'email',
+          name: 'email',
+          text: 'Seu e-mail',
+          placeholder: 'E-mail',
+          value: true,
+          required: true })
+
+        @!component('layouts/components/input', {
+          type: 'password',
+          name: 'password',
+          text: 'Sua senha',
+          placeholder: '••••••••',
+          value: true,
+          required: true })
+
+        @!component('layouts/components/input', {
+          type: 'password',
+          name: 'passwordConfirmation',
+          text: 'Confirmar sua senha',
+          placeholder: '••••••••',
+          value: true,
+          required: true })
+
         <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center :bg-blue-600">Criar conta</button>
         <div class="text-sm font-medium text-gray-500">
           Já possui uma conta? <a href="{{ route('auth/create') }}" class="text-blue-700 hover:underline">Entre aqui</a>

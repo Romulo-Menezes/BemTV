@@ -1,14 +1,21 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
+import Hash from '@ioc:Adonis/Core/Hash'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 import UpdateUserValidator from 'App/Validators/UpdateUserValidator'
 
 export default class UsersController {
-  public async create({ view }: HttpContextContract) {
+  public async create({ view, auth, response }: HttpContextContract) {
+    if (auth.isLoggedIn) {
+      return response.redirect().back()
+    }
     return view.render('user/create')
   }
 
-  public async store({ request, session, response }) {
+  public async store({ request, session, response, auth }) {
+    if (auth.isLoggedIn) {
+      return response.redirect().back()
+    }
     const payload = await request.validate(CreateUserValidator)
     const { firstName, lastName, email, password } = payload
     await User.create({
@@ -21,13 +28,21 @@ export default class UsersController {
     return response.redirect().toRoute('auth/create')
   }
 
-  public async edit({ view }: HttpContextContract) {
+  public async edit({ view, session, auth }: HttpContextContract) {
+    session.flash('firstName', auth.user.first_name)
+    session.flash('lastName', auth.user.last_name)
+    session.flash('email', auth.user.email)
     return view.render('user/update')
   }
 
   public async update({ auth, request, session, response }: HttpContextContract) {
     const payload = await request.validate(UpdateUserValidator)
-    const { firstName, lastName, email, password } = payload
+    const { firstName, lastName, email, password, passwordConfirmation } = payload
+    if (!(await Hash.verify(auth.user.password, passwordConfirmation))) {
+      session.flashAll()
+      session.flash('errors.passwordConfirmation', 'Senha incorreta!')
+      return response.redirect().back()
+    }
     try {
       const user = await User.findByOrFail('email', auth.user?.email)
       user.first_name = firstName ?? user.first_name
@@ -39,7 +54,7 @@ export default class UsersController {
       return response.redirect().back()
     } catch (error) {
       console.log(error.messages)
-      session.flash('errors.update', 'Ocorreu um erro ao tentar editar.')
+      session.flash('error', 'Ocorreu um erro ao tentar editar.')
       return response.redirect().back()
     }
   }

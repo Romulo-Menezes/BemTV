@@ -2,7 +2,7 @@ import { schema, rules, CustomMessages } from '@ioc:Adonis/Core/Validator'
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 export default class UpdateUserValidator {
-  constructor(protected ctx: HttpContextContract) {}
+  constructor(protected ctx: HttpContextContract) { }
 
   public schema = schema.create({
     firstName: schema.string.nullable({}, [
@@ -27,11 +27,13 @@ export default class UpdateUserValidator {
       rules.unique({ table: 'users', column: 'email' }),
     ]),
     password: schema.string.nullable({}, [
-      rules.confirmed('passwordConfirmation'),
+      rules.trim(),
+      rules.escape(),
       rules.minLength(8),
       rules.maxLength(16),
       rules.alphaNum(),
     ]),
+    passwordConfirmation: schema.string({}, [rules.trim(), rules.escape()]),
   })
 
   public messages: CustomMessages = {
@@ -44,5 +46,7 @@ export default class UpdateUserValidator {
     'password.maxLength': 'O tamanho máximo de uma senha é de 16 caracteres.',
     'password.minLength': 'O tamanho mínimo de uma senha é de 8 caracteres.',
     'password.alphaNum': 'Sua senha deve conter apenas letras e/ou números',
+    'passwordConfirmation.required':
+      'É necessário inserir sua senha atual para editar suas informações!',
   }
 }

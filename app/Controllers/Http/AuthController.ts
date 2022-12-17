@@ -1,22 +1,29 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Hash from '@ioc:Adonis/Core/Hash'
 import User from 'App/Models/User'
+import LoginValidator from 'App/Validators/LoginValidator'
 
 export default class AuthController {
-  public async create({ view }: HttpContextContract) {
+  public async create({ view, response, auth }: HttpContextContract) {
+    if (auth.isLoggedIn) {
+      return response.redirect().back()
+    }
     return view.render('auth/create')
   }
 
   public async store({ auth, request, session, response }: HttpContextContract) {
-    const email = request.input('email')
-    const password = request.input('password')
+    if (auth.isLoggedIn) {
+      return response.redirect().back()
+    }
+    const payload = await request.validate(LoginValidator)
+    const { email, password } = payload
     const remember = request.input('remember')
     const rememberMe = remember !== undefined ? true : false
     try {
       const user = await User.query().where('email', email).firstOrFail()
       if (!(await Hash.verify(user.password, password))) {
         session.flashAll()
-        session.flash('errors', 'Usuário e/ou senha inválido!')
+        session.flash('error', 'Usuário e/ou senha inválido!')
         return response.redirect().back()
       }
       await auth.use('web').login(user, rememberMe)
@@ -24,13 +31,14 @@ export default class AuthController {
       return response.redirect().toPath('/')
     } catch (error) {
       session.flashAll()
-      session.flash('errors', 'Usuário e/ou senha inválido!')
+      session.flash('error', 'Usuário e/ou senha inválido!')
       return response.redirect().back()
     }
   }
 
-  public async destroy({ auth, response }: HttpContextContract) {
+  public async destroy({ auth, response, session }: HttpContextContract) {
     await auth.use('web').logout()
+    session.flash('success', 'Logout efetuado com sucesso!')
     return response.redirect().toRoute('/')
   }
 }
