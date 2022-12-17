@@ -5,11 +5,17 @@ import CreateUserValidator from 'App/Validators/CreateUserValidator'
 import UpdateUserValidator from 'App/Validators/UpdateUserValidator'
 
 export default class UsersController {
-  public async create({ view }: HttpContextContract) {
+  public async create({ view, auth, response }: HttpContextContract) {
+    if (auth.isLoggedIn) {
+      return response.redirect().back()
+    }
     return view.render('user/create')
   }
 
-  public async store({ request, session, response }) {
+  public async store({ request, session, response, auth }) {
+    if (auth.isLoggedIn) {
+      return response.redirect().back()
+    }
     const payload = await request.validate(CreateUserValidator)
     const { firstName, lastName, email, password } = payload
     await User.create({
@@ -48,7 +54,7 @@ export default class UsersController {
       return response.redirect().back()
     } catch (error) {
       console.log(error.messages)
-      session.flash('errors.update', 'Ocorreu um erro ao tentar editar.')
+      session.flash('error', 'Ocorreu um erro ao tentar editar.')
       return response.redirect().back()
     }
   }
