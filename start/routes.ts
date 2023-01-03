@@ -20,9 +20,9 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async ({ view }) => {
-  return view.render('index')
-})
+Route.get('/', 'VideosController.index').as('index')
+Route.get('/enviar-video', 'VideosController.create').as('video/create')
+Route.post('/enviar-video', 'VideosController.store').as('video/store')
 
 Route.get('/login', 'AuthController.create').as('auth/create')
 Route.post('/login', 'AuthController.store').as('auth/store')

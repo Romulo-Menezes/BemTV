@@ -1,0 +1,18 @@
+@layout('layouts/main')
+@set('title', 'Home')
+
+@section('body')
+
+@!component('layouts/components/alertSuccess')
+
+<div class="flex flex-wrap items-center justify-center">
+  @each(row in rows)
+  @!component('layouts/components/video/card', {
+    url: row.url,
+    thumb: row.thumb,
+    title: row.title.substring(0,30),
+  })
+  @endeach
+</div>
+
+@endsection

@@ -28,7 +28,9 @@ export default class User extends BaseModel {
   @column()
   public last_name: string
 
-  @hasMany(() => Video)
+  @hasMany(() => Video, {
+    foreignKey: 'user_id',
+  })
   public videos: HasMany<typeof Video>
 
   @beforeSave()

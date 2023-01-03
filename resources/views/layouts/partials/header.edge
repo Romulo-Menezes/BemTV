@@ -1,11 +1,12 @@
 <nav class="bg-gradient-to-t from-yellow-200 via-yellow-300 to-yellow-500 px-2 sm:px-4 py-2.5">
   <div class="container flex flex-wrap items-center justify-between mx-auto">
-  <a href="/" class="flex items-center">
+  <a href="{{ route('index') }}" class="flex items-center">
       <img src="BemTV.svg" class="h-6 mr-3 sm:h-9" alt="BemTV" />
       <span class="self-center text-xl font-semibold whitespace-nowrap">BemTV</span>
   </a>
   @if(auth.isLoggedIn)
   <div class="flex items-center md:order-2">
+    <a href="{{ route('video/create') }}" class="text-white hover:bg-gradient-to-tl bg-gradient-to-br from-green-300 via-green-500 to-green-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3">Enviar Video</a>
     <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
       <span class="sr-only">Menu do usuário</span>
       <img class="w-8 h-8 rounded-full" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="user photo">
