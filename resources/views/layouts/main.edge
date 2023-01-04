@@ -7,12 +7,13 @@
   @entryPointStyles('app')
   @entryPointScripts('app')
 </head>
-<body>
+<body class="bg-zinc-100">
   <main>
 
     @include('layouts/partials/header')
-
-    @!section('body')
+    <div class="mt-20">
+      @!section('body')
+    </div>
 
   </main>
 </body>

@@ -5,11 +5,11 @@ import Video from 'App/Models/Video'
 import authConfig from 'Config/auth'
 
 export default class VideosController {
-  public async index({ view }: HttpContextContract) {
+  public async index({ view, request }: HttpContextContract) {
+    const page = request.input('page', 1)
     const limit = 10
-    const videos = await Database.from('videos').orderBy('created_at', 'desc').paginate(1, limit)
-    console.log(videos)
-    return view.render('video/index', { rows: videos.all() })
+    const videos = await Database.from('videos').orderBy('created_at', 'desc').paginate(page, limit)
+    return view.render('video/index', { videos })
   }
 
   public async create({ view }: HttpContextContract) {
