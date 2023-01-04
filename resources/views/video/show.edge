@@ -8,7 +8,7 @@
     <h2>{{video.title}}</h2>
   </div>
   <div class="mb-5">
-  @!component('layouts/components/video/embed',{
+  @!video.embed({
     path: video.url.slice(-11)
   })
   </div>

@@ -8,7 +8,7 @@
     <form class="space-y-6" method="POST" action="{{ route('video/store')}}">
         <h5 class="text-xl font-medium text-gray-900">Enviar vídeo</h5>
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'text',
           name: 'title',
           text: 'Titulo do vídeo',
@@ -16,14 +16,14 @@
           value: true,
           required: true })
 
-        @!component('layouts/components/textArea', {
+        @!textArea({
           name: 'description',
           text: 'Descrição do vídeo',
           placeholder: 'Descrição',
           value: true,
           required: true })
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'text',
           name: 'url',
           text: 'URL do vídeo',
@@ -31,7 +31,7 @@
           value: true,
           required: true })
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'text',
           name: 'thumb',
           text: 'URL da thumb do vídeo',

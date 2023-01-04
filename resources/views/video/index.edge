@@ -3,12 +3,12 @@
 
 @section('body')
 
-@!component('layouts/components/alertSuccess')
+@!alertSuccess()
 
 <div>
   <div class="flex flex-wrap items-center justify-center">
     @each(row in videos)
-    @!component('layouts/components/video/card', {
+    @!video.card({
       id: row.id,
       url: row.url,
       thumb: row.thumb,

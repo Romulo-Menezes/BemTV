@@ -4,12 +4,12 @@
 @section('body')
 <div class="flex justify-center pt-10">
   <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8">
-    @!component('layouts/components/alertError')
-    @!component('layouts/components/alertSuccess')
+    @!alertError()
+    @!alertSuccess()
     <form class="space-y-6" method="POST" action="{{ route('user/update')}}">
         <h5 class="text-xl font-medium text-gray-900">Editar perfil</h5>
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'text',
           name: 'firstName',
           text: 'Editar nome',
@@ -17,7 +17,7 @@
           value: false,
           required: false })
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'text',
           name: 'lastName',
           text: 'Editar sobrenome',
@@ -25,7 +25,7 @@
           value: false,
           required: false })
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'email',
           name: 'email',
           text: 'Editar e-mail',
@@ -33,7 +33,7 @@
           value: false,
           required: false })
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'password',
           name: 'password',
           text: 'Editar senha',
@@ -41,7 +41,7 @@
           value: false,
           required: false })
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'password',
           name: 'passwordConfirmation',
           text: 'Confirme sua senha atual',

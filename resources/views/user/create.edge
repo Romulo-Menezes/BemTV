@@ -7,7 +7,7 @@
     <form class="space-y-6" method="POST" action="{{ route('user/store')}}">
         <h5 class="text-xl font-medium text-gray-900">Criar conta</h5>
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'text',
           name: 'firstName',
           text: 'Seu nome',
@@ -15,7 +15,7 @@
           value: true,
           required: true })
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'text',
           name: 'lastName',
           text: 'Seu sobrenome',
@@ -23,7 +23,7 @@
           value: true,
           required: true })
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'email',
           name: 'email',
           text: 'Seu e-mail',
@@ -31,7 +31,7 @@
           value: true,
           required: true })
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'password',
           name: 'password',
           text: 'Sua senha',
@@ -39,7 +39,7 @@
           value: true,
           required: true })
 
-        @!component('layouts/components/input', {
+        @!input({
           type: 'password',
           name: 'passwordConfirmation',
           text: 'Confirmar sua senha',
