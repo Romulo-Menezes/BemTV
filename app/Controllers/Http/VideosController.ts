@@ -2,8 +2,6 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
 import User from 'App/Models/User'
 import Video from 'App/Models/Video'
-import authConfig from 'Config/auth'
-
 export default class VideosController {
   public async index({ view, request }: HttpContextContract) {
     const page = request.input('page', 1)
@@ -35,5 +33,12 @@ export default class VideosController {
       return response.redirect().back()
     }
     return response.redirect().toRoute('index')
+  }
+
+  public async show({ view, request }: HttpContextContract) {
+    const id = request.param('id')
+    const video = await Video.find(id)
+
+    return view.render('video/show', { video })
   }
 }

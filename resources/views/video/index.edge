@@ -9,9 +9,10 @@
   <div class="flex flex-wrap items-center justify-center">
     @each(row in videos)
     @!component('layouts/components/video/card', {
+      id: row.id,
       url: row.url,
       thumb: row.thumb,
-      title: row.title.substring(0,30),
+      title: row.title.length > 38 ? row.title.substring(0,35) + '...' : row.title,
     })
     @endeach
   </div>

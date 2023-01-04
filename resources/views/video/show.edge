@@ -1,0 +1,23 @@
+@layout('layouts/main')
+@set('title', 'MODIFICAR')
+
+@section('body')
+
+<div class="flex grid grid-cols-1 justify-items-center">
+  <div class="text-2xl font-bold text-left mb-5">
+    <h2>{{video.title}}</h2>
+  </div>
+  <div class="mb-5">
+  @!component('layouts/components/video/embed',{
+    path: video.url.slice(-11)
+  })
+  </div>
+  <div class="mb-5">
+    <p class="w-[720px]">
+      {{video.description}}
+    </p>
+  </div>
+</div>
+
+
+@endsection
