@@ -3,25 +3,28 @@
 
 @section('body')
 
-<div class="grid grid-cols-1 justify-items-center">
-  <div class="text-2xl font-bold text-left mb-5">
-    <h2>{{video.title}}</h2>
+<div class="container mx-auto py-4">
+  <div class="relative overflow-hidden">
+    <div class="w-full">
+      @!video.embed({
+        path
+      })
+    </div>
   </div>
-  <div class="mb-5">
-  @!video.embed({
-    path
-  })
-  </div>
-  <div class="font-bold">
-    <p class="w-[720px] text-xl whitespace-pre-line">
-      {{creator}}
-    </p>
-    <p> Enviado {{video.createdAt.toLocaleString()}}</p>
-  </div>
-  <div class="mb-5">
-    <p class="w-[720px] whitespace-pre-line">
-      {{video.description}}
-    </p>
+  <div class="bg-gray-200 rounded-lg shadow-md py-4 mt-2 w-[1275px]">
+    <div class="ml-2" >
+      <h2 class="text-lg font-medium">{{video.title}}</h2>
+      <p class="text-sm text-gray-700 w-[720px] whitespace-pre-line">
+        {{video.description}}
+      </p>
+    </div>
+    <div class="flex items-center mt-4">
+      <div class="ml-2">
+        <p class="text-sm font-medium">{{creator}}</p>
+        <p class="text-sm text-gray-700">Data de publicação</p>
+        <p>{{video.createdAt.toLocaleString()}}</p>
+      </div>
+    </div>
   </div>
 </div>
 

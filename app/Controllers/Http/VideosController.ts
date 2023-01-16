@@ -8,7 +8,13 @@ export default class VideosController {
     const page = request.input('page', 1)
     const limit = 20
     const videos = await Database.from('videos').orderBy('created_at', 'desc').paginate(page, limit)
-    return view.render('video/index', { videos })
+    const pagination = {
+      currentPage: videos.currentPage,
+      endPage: videos.currentPage + 9,
+      nextPage: videos.currentPage + 1,
+      previousPage: videos.currentPage - 1,
+    }
+    return view.render('video/index', { videos, pagination })
   }
 
   public async create({ view }: HttpContextContract) {
