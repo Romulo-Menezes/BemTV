@@ -1,19 +1,17 @@
 @layout('layouts/main')
 @set('title', 'MODIFICAR')
-
 @section('body')
-
 <div class="container mx-auto py-4">
   <div class="relative overflow-hidden">
     <div class="w-full">
       @!video.embed({
-        path
+        url_code: video.url_code
       })
     </div>
   </div>
   <div class="bg-gray-200 rounded-lg shadow-md py-4 mt-2 w-[1275px]">
     <div class="ml-2" >
-      <h2 class="text-lg font-medium">{{video.title}}</h2>
+      <h2 class="text-lg font-medium break-words">{{video.title}}</h2>
       <p class="text-sm text-gray-700 w-[720px] whitespace-pre-line">
         {{video.description}}
       </p>
@@ -27,6 +25,4 @@
     </div>
   </div>
 </div>
-
-
 @endsection

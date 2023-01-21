@@ -28,8 +28,7 @@
     @each(row in videos)
     @!video.card({
       id: row.id,
-      url: row.url,
-      thumb: row.thumb,
+      url_code: row.url_code,
       title: row.title.length > 38 ? row.title.substring(0,35) + '...' : row.title,
     })
     @endeach

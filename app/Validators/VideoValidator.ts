@@ -14,11 +14,9 @@ export default class VideoValidator {
       ),
       rules.maxLength(43),
     ]),
-    thumb: schema.string([rules.trim(), rules.url()]),
   })
 
   public messages: CustomMessages = {
     'url.regex': 'Só é aceito links de vídeos do YouTube!',
-    'thumb.url': 'Url inválida',
   }
 }

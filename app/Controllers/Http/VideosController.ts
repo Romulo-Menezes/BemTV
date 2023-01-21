@@ -6,7 +6,7 @@ import VideoValidator from 'App/Validators/VideoValidator'
 export default class VideosController {
   public async index({ view, request }: HttpContextContract) {
     const page = request.input('page', 1)
-    const limit = 20
+    const limit = 10
     const videos = await Database.from('videos').orderBy('created_at', 'desc').paginate(page, limit)
     const pagination = {
       currentPage: videos.currentPage,
@@ -21,21 +21,29 @@ export default class VideosController {
     return view.render('video/create')
   }
 
-  public async store({ response, request, auth }: HttpContextContract) {
+  public async store({ response, request, auth, session }: HttpContextContract) {
     const payload = await request.validate(VideoValidator)
-    const { title, description, url, thumb } = payload
+    const { title, description, url } = payload
+    let path
+    if (url.length > 28) {
+      const link = new URL(url)
+      path = link.searchParams.get('v')
+    } else {
+      path = url.slice(-11)
+    }
     try {
       const user = await User.findOrFail(auth.user?.id)
       await user.related('videos').create({
         title,
         description,
-        url,
-        thumb,
+        url_code: path,
       })
     } catch (error) {
       console.error(error)
-      return response.redirect().back()
+      session.flash('error', 'Ocorreu um erro ao tentar enviar o vídeo ao banco.')
+      return response.redirect().toRoute('index')
     }
+    session.flash('success', 'Vídeo enviado com sucesso!')
     return response.redirect().toRoute('index')
   }
 
@@ -44,20 +52,12 @@ export default class VideosController {
     try {
       const video = await Video.findOrFail(id)
       const user = await User.findOrFail(video.user_id)
-      let path
-      if (video.url.length > 28) {
-        const url = new URL(video.url)
-        path = url.searchParams.get('v')
-      } else {
-        path = video.url.slice(-11)
-      }
-
       return view.render('video/show', {
         video,
-        path,
         creator: `${user.first_name} ${user.last_name}`,
       })
     } catch (error) {
+      console.error(error)
       response.redirect().back()
     }
   }
