@@ -3,11 +3,11 @@
 
 @section('body')
 @!alertSuccess()
+@!alertError()
 <div class="flex justify-center pt-10">
   <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8">
     <form class="space-y-6" method="POST" action="{{ route('auth/store')}}">
         <h5 class="text-xl font-medium text-gray-900">Login</h5>
-        @!alertError()
         @!input({
           type: 'email',
           name: 'email',

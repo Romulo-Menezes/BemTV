@@ -4,10 +4,13 @@ import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 import VideoValidator from 'App/Validators/VideoValidator'
 export default class VideosController {
-  public async index({ view, request }: HttpContextContract) {
+  public async index({ view, request, response }: HttpContextContract) {
     const page = request.input('page', 1)
     const limit = 10
     const videos = await Database.from('videos').orderBy('created_at', 'desc').paginate(page, limit)
+    if (page > videos.lastPage) {
+      return response.redirect().toRoute('index')
+    }
     const pagination = {
       currentPage: videos.currentPage,
       endPage: videos.currentPage + 9,
@@ -47,7 +50,7 @@ export default class VideosController {
     return response.redirect().toRoute('index')
   }
 
-  public async show({ view, request, response }: HttpContextContract) {
+  public async show({ view, request, response, session }: HttpContextContract) {
     const id = request.param('id')
     try {
       const video = await Video.findOrFail(id)
@@ -56,9 +59,13 @@ export default class VideosController {
         video,
         creator: `${user.first_name} ${user.last_name}`,
       })
-    } catch (error) {
-      console.error(error)
-      response.redirect().back()
+    } catch (e) {
+      if (e.message === 'E_ROW_NOT_FOUND: Row not found') {
+        session.flash('error', 'Vídeo não encontrado!')
+      } else {
+        session.flash('error', e.message)
+      }
+      response.redirect().toRoute('index')
     }
   }
 }
