@@ -25,6 +25,7 @@ export default class UsersController {
       password: password,
     })
     session.flash('success', 'Cadastro criado com sucesso!')
+    session.flash('email', email)
     return response.redirect().toRoute('auth/create')
   }
 
