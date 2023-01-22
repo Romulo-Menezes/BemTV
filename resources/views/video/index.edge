@@ -2,58 +2,20 @@
 @set('title', 'Home')
 
 @section('body')
-
 @!alertSuccess()
 @!alertError()
 
-<div>
-  <div class="flex flex-wrap items-center justify-center">
-    @if(videos.hasPages)
-      @if(pagination.previousPage > 0)
-      <a href="{{ videos.getUrl( pagination.previousPage ) }} " class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 mb-5">
-        &lt;
-      </a>
-      @endif
-    @each(anchor in videos.getUrlsForRange( videos.lastPage - pagination.currentPage < 10 ? videos.lastPage - 9 : pagination.currentPage, pagination.endPage > videos.lastPage ? videos.lastPage : pagination.endPage))
-      <a href="{{ anchor.url }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 mb-5">
-        {{ anchor.page }}
-      </a>
-    @endeach
-      @if(pagination.nextPage <= videos.lastPage)
-      <a href="{{ videos.getUrl( pagination.nextPage ) }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 mb-5">
-        &gt;
-      </a>
-      @endif
-    @endif
-  </div>
-  <div class="flex flex-wrap items-center justify-center">
-    @each(row in videos)
-    @!video.card({
-      id: row.id,
-      url_code: row.url_code,
-      title: row.title.length > 38 ? row.title.substring(0,35) + '...' : row.title,
-    })
-    @endeach
-  </div>
-  <div class="flex flex-wrap items-center justify-center">
-    @if(videos.hasPages)
-      @if(pagination.previousPage > 0)
-      <a href="{{ videos.getUrl( pagination.previousPage ) }} " class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 mb-5">
-        &lt;
-      </a>
-      @endif
-    @each(anchor in videos.getUrlsForRange( videos.lastPage - pagination.currentPage < 10 ? videos.lastPage - 9 : pagination.currentPage, pagination.endPage > videos.lastPage ? videos.lastPage : pagination.endPage))
-      <a href="{{ anchor.url }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 mb-5">
-        {{ anchor.page }}
-      </a>
-    @endeach
-      @if(pagination.nextPage <= videos.lastPage)
-      <a href="{{ videos.getUrl( pagination.nextPage ) }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 mb-5">
-        &gt;
-      </a>
-      @endif
-    @endif
-  </div>
+@!pageNav({videos, pagination})
+<div class="flex flex-wrap items-center justify-center">
+  @each(row in videos)
+  @!video.card({
+    id: row.id,
+    url_code: row.url_code,
+    title: row.title.length > 38 ? row.title.substring(0,35) + '...' : row.title,
+  })
+  @endeach
 </div>
-
+<div class="mb-6">
+  @!pageNav({videos, pagination})
+</div>
 @endsection

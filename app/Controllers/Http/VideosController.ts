@@ -3,19 +3,29 @@ import Database from '@ioc:Adonis/Lucid/Database'
 import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 import VideoValidator from 'App/Validators/VideoValidator'
+import session from 'Config/session'
 export default class VideosController {
-  public async index({ view, request, response }: HttpContextContract) {
+  public async index({ view, request, response, session }: HttpContextContract) {
     const page = request.input('page', 1)
-    const limit = 10
+    const limit = 20
     const videos = await Database.from('videos').orderBy('created_at', 'desc').paginate(page, limit)
     if (page > videos.lastPage) {
+      session.flash('error', 'Você tentou acessar uma página inexistente!')
       return response.redirect().toRoute('index')
     }
+    const LIMIT = 9
+    const LR_LIMIT = (LIMIT - 1) / 2
     const pagination = {
-      currentPage: videos.currentPage,
-      endPage: videos.currentPage + 9,
-      nextPage: videos.currentPage + 1,
-      previousPage: videos.currentPage - 1,
+      start:
+        videos.currentPage + LR_LIMIT > videos.lastPage
+          ? videos.lastPage - LIMIT + 1
+          : Math.max(videos.currentPage - LR_LIMIT, videos.firstPage),
+      end:
+        videos.lastPage < LIMIT
+          ? videos.lastPage
+          : videos.currentPage < LR_LIMIT + 1
+          ? LIMIT
+          : Math.min(videos.currentPage + LR_LIMIT, videos.lastPage),
     }
     return view.render('video/index', { videos, pagination })
   }
