@@ -1,37 +1,50 @@
-<nav class="bg-yellow-200 px-2 sm:px-4 py-2.5 fixed w-full z-20 top-0 left-0 border-b border-gray-200">
-  <div class="container flex flex-wrap items-center justify-between mx-auto">
-  <a href="{{ route('index') }}" class="flex items-center">
-      <div class="h-6 mr-3 sm:h-9" alt="BemTV">
-        @!logo()
-      </div>
-      <span class="self-center text-xl font-semibold whitespace-nowrap">BemTV</span>
-  </a>
-  @if(auth.isLoggedIn)
-  <div class="flex items-center md:order-2">
-    <a href="{{ route('video/create') }}" class="text-white hover:bg-gradient-to-tl bg-gradient-to-br from-green-300 via-green-500 to-green-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3">Enviar Video</a>
-    <button type="button" class="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-      <span class="sr-only">Menu do usuário</span>
-      <img class="w-8 h-8 rounded-full" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="user photo">
-    </button>
-    <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow" id="user-dropdown">
-      <div class="px-4 py-3">
-        <span class="block text-sm text-gray-900">{{ auth.user.first_name }} {{ auth.user.last_name }}</span>
-        <span class="block text-sm font-medium text-gray-500 truncate">{{ auth.user.email }}</span>
-      </div>
-      <ul class="py-1" aria-labelledby="user-menu-button">
-        <li>
-          <a href="{{route('user/edit')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Editar perfil</a>
-        </li>
-        <li>
-          <a href="{{ route('auth/destroy') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
-        </li>
-      </ul>
+<nav id="bgMain" class="sm:px-4 py-2.5 fixed w-full z-20 top-0 left-1">
+  <div class="container flex items-center justify-between">
+    <div class="flex">
+      <a href="{{ route('index') }}" class="flex items-center">
+          <div class="h-6 mr-3 sm:h-9" alt="BemTV">
+            @!logo()
+          </div>
+          <span class="self-center text-xl font-semibold whitespace-nowrap">BemTV</span>
+      </a>
+      <form>
+          <div class="relative ml-48">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              </div>
+              <input id="searchBG" type="search" id="default-search" class="border-0 block px-64 pl-10 text-sm rounded-lg" placeholder="Search" required>
+          </div>
+      </form>
     </div>
-  </div>
-  @else
-  <div class="flex items-center md:order-2">
-    <a href="{{ route('auth/create') }}" class="text-white hover:bg-gradient-to-tl bg-gradient-to-br from-green-300 via-green-500 to-green-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3"> Login </a>
-    <a href="{{ route('user/create') }}" class="text-white hover:bg-gradient-to-tl bg-gradient-to-br from-yellow-600 via-yellow-800 to-yellow-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3"> Cadastrar-se </a>
-  </div>
-  @endif
+    @if(auth.isLoggedIn)
+    <div class="flex items-center md:order-2">
+      <a href="{{ route('video/create')}}" class="mr-6">
+         <svg id="iconWhite" class="w-8 h-8 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"></path>
+      </svg>
+      </a>
+      <button type="button" class="flex text-sm bg-gray-800 rounded-full md:mr-0" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+        <span class="sr-only">Menu do usuário</span>
+        <img class="w-10 h-10 rounded-full" src="https://cdn-icons-png.flaticon.com/512/3011/3011270.png" alt="user photo">
+      </button>
+      <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow" id="user-dropdown">
+        <div class="px-4 py-3">
+          <span class="block text-sm text-gray-900">{{ auth.user.first_name }} {{ auth.user.last_name }}</span>
+          <span class="block text-sm font-medium text-gray-500 truncate">{{ auth.user.email }}</span>
+        </div>
+        <ul class="py-1" aria-labelledby="user-menu-button">
+          <li>
+            <a href="{{route('user/edit')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Editar perfil</a>
+          </li>
+          <li>
+            <a href="{{ route('auth/destroy') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    @else
+    <div>
+      <a href="{{ route('auth/create') }}" class="text-white bg-blue-500 rounded-lg text-sm px-5 py-2.5 text-center"> Login/Cadastro </a>
+    </div>
+    @endif
+  </dif>
 </nav>

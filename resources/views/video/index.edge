@@ -5,13 +5,12 @@
 @!alertSuccess()
 @!alertError()
 
-@!pageNav({videos, pagination})
-<div class="flex flex-wrap items-center justify-center">
+<div class="flex flex-wrap items-center justify-start">
   @each(row in videos)
   @!video.card({
     id: row.id,
     url_code: row.url_code,
-    title: row.title.length > 38 ? row.title.substring(0,35) + '...' : row.title,
+    title: row.title.length > 45 ? row.title.substring(0,42) + '...' : row.title,
   })
   @endeach
 </div>

@@ -1,8 +1,16 @@
-<a href="{{ route('video/show', { id }) }}">
-  <div class="w-full max-w-sm bg-white rounded-lg shadow-md m-4">
-    <img class="p-8 max-h-[188] h-[188] max-w-[336] w-[336] rounded-t-lg" src="https://img.youtube.com/vi/{{ url_code }}/mqdefault.jpg" alt="thumb image"/>
-    <div class="px-5 pb-5">
-      <h5 class="text-xl text-center font-semibold tracking-tight text-gray-900"> {{ title }}</h5>
+<a href="{{ route('video/show', { id }) }}" id="cardBG" class="flex items-start bg-white rounded-lg shadow md:flex-row md:max-w-xl mr-5 mb-5 p-2 w-[480px]">
+
+  <img class="md:w-52 max-w-full rounded-lg" src="https://img.youtube.com/vi/{{ url_code }}/mqdefault.jpg" alt="thumb image">
+
+    <div class="flex flex-col items-start leading-normal pl-3">
+      <h5 class="mb-7 text-1xl font-bold tracking-tight text-white-900 dark:text-white"> {{ title }} </h5>
+
+        <div class="flex items-center"> 
+          <img class="rounded-full w-9 h-9" src="https://cdn-icons-png.flaticon.com/512/3011/3011270.png" alt="image description">
+            <div class="flex flex-col pl-2"> 
+              <p class="text-sm text-gray-200 dark:text-gray-200"> {{ creator }} </p>
+              <p class="text-xs text-gray-500 dark:text-gray-500">2 days ago</p>
+            </div>
+        </div>
     </div>
-  </div>
 </a>
