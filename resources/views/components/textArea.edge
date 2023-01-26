@@ -1,5 +1,5 @@
 
-<label for="{{ name }}" class="block mb-2 text-sm font-medium text-gray-900">{{ text }}</label>
+<label for="{{ name }}" class="text-gray-400 block text-sm font-medium">{{ text }}</label>
 <textarea
   id="{{ name }}"
   name="{{ name }}"
@@ -7,7 +7,7 @@
   required
   @endif
   rows="4"
-  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+  class="bg-gray-900 block p-2.5 w-full text-sm text-white rounded-lg border border-gray-900 focus:ring-blue-500 focus:border-blue-500"
   placeholder="{{ placeholder }}"
  >
  @if(value)
