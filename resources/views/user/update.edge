@@ -3,11 +3,11 @@
 
 @section('body')
 <div class="flex justify-center pt-10 mb-10">
-  <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-md sm:p-6 md:p-8">
+  <div id="cardBG" class="w-full max-w-sm p-4 bg-white rounded-lg shadow-md sm:p-6 md:p-8">
     @!alertError()
     @!alertSuccess()
     <form class="space-y-6" method="POST" action="{{ route('user/update')}}">
-        <h5 class="text-xl font-medium text-gray-900">Editar perfil</h5>
+        <h5 class="text-xl font-medium text-white">Editar perfil</h5>
 
         @!input({
           type: 'text',
