@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ title }}</title>
-  @entryPointStyles('app')
-  @entryPointScripts('app')
-</head>
-<body>
-  <main>
-
-    @include('layouts/partials/header')
-    @include('layouts/partials/sidebar')
-
-    <div class="mt-20 pl-72 mb-10">
-      @!section('body')
-    </div>
-
-  </main>
-</body>
-</html>
+@layout('layouts/root')
+@section('content')
+  @include('layouts/partials/header')
+  @include('layouts/partials/sidebar')
+  <div class="mt-20 pl-72 mb-10">
+    @!section('body')
+  </div>
+@endsection
