@@ -3,3 +3,47 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+
+body{
+    background-color: #1F1D2C;
+}
+
+span{
+    color: white;
+}
+
+h5{
+    color: white;
+}
+
+#iconWhite {
+    color: white;
+}
+
+#bgMain{
+    background-color: #1F1D2C;
+}
+
+#searchBG{
+    background-color: #363342;
+}
+
+#cardBG {
+    background-color: #262837;
+}
+
+#pagination{
+    background-color: #363342;
+    color: white;
+    border: 0ch;
+}
+
+#paginationSelect{
+    background-color: #3b82f6;
+    color: white;
+    border: 0ch;
+}
+
+#svgShowVideo{
+    color: #999aa8;
+}
