@@ -16,7 +16,10 @@
 </head>
 <body>
   <main>
-    @!section('content')
+    @include('layouts/partials/header')
+    <div class="mt-20 mb-10">
+      @!section('body')
+    </div>
   </main>
 </body>
 </html>
