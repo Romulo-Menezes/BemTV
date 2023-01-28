@@ -6,13 +6,6 @@
   <title>{{ title }}</title>
   @entryPointStyles('app')
   @entryPointScripts('app')
-  <script>
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark')
-    }
-  </script>
 </head>
 <body class="bg-gray-200 dark:bg-gray-900">
   <main>
