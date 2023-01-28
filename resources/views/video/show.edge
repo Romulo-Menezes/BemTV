@@ -10,8 +10,8 @@
     <div>
       <img class="rounded-full w-10 h-10 mr-3" src="https://cdn-icons-png.flaticon.com/512/3011/3011270.png" alt="image description">
       <div class="flex flex-col">
-        <p class="text-black dark:text-white font-medium">{{creator}}</p>
-        <p class="text-black dark:text-white">{{ time }}</p>
+        <p class="text-black dark:text-white font-medium">{{`${video.author.first_name} ${video.author.last_name}`}}</p>
+        <p class="text-black dark:text-white">{{ video.createdAt.toLocaleString() }}</p>
       </div>
     </div>
     <div>

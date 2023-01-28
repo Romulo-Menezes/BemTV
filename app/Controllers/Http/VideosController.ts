@@ -1,5 +1,4 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Database from '@ioc:Adonis/Lucid/Database'
 import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 import VideoValidator from 'App/Validators/VideoValidator'
@@ -7,7 +6,10 @@ export default class VideosController {
   public async index({ view, request, response, session }: HttpContextContract) {
     const page = request.input('page', 1)
     const limit = 16
-    const videos = await Database.from('videos').orderBy('created_at', 'desc').paginate(page, limit)
+    const videos = await Video.query()
+      .preload('author')
+      .orderBy('created_at', 'desc')
+      .paginate(page, limit)
     if (page > videos.lastPage) {
       session.flash('error', 'Você tentou acessar uma página inexistente!')
       return response.redirect().toRoute('index')
@@ -48,12 +50,8 @@ export default class VideosController {
   public async show({ view, request, response, session }: HttpContextContract) {
     const id = request.param('id')
     try {
-      const video = await Video.findOrFail(id)
-      const user = await User.findOrFail(video.user_id)
-      return view.render('video/show', {
-        video,
-        creator: `${user.first_name} ${user.last_name}`,
-      })
+      const video = await Video.query().preload('author').where('id', id).firstOrFail()
+      return view.render('video/show', { video })
     } catch (e) {
       if (e.message === 'E_ROW_NOT_FOUND: Row not found') {
         session.flash('error', 'Vídeo não encontrado!')
