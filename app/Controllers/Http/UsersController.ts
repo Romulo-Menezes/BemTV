@@ -25,23 +25,23 @@ export default class UsersController {
       password: password,
     })
     session.flash('success', 'Cadastro criado com sucesso!')
+    session.flash('email', email)
     return response.redirect().toRoute('auth/create')
   }
 
-  public async edit({ view, session, auth }: HttpContextContract) {
-    session.flash('firstName', auth.user.first_name)
-    session.flash('lastName', auth.user.last_name)
-    session.flash('email', auth.user.email)
+  public async edit({ view }: HttpContextContract) {
     return view.render('user/update')
   }
 
   public async update({ auth, request, session, response }: HttpContextContract) {
     const payload = await request.validate(UpdateUserValidator)
     const { firstName, lastName, email, password, passwordConfirmation } = payload
-    if (!(await Hash.verify(auth.user.password, passwordConfirmation))) {
-      session.flashAll()
-      session.flash('errors.passwordConfirmation', 'Senha incorreta!')
-      return response.redirect().back()
+    if (auth.user !== undefined) {
+      if (!(await Hash.verify(auth.user.password, passwordConfirmation))) {
+        session.flashAll()
+        session.flash('errors.passwordConfirmation', 'Senha incorreta!')
+        return response.redirect().back()
+      }
     }
     try {
       const user = await User.findByOrFail('email', auth.user?.email)

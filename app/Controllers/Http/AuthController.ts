@@ -28,7 +28,7 @@ export default class AuthController {
       }
       await auth.use('web').login(user, rememberMe)
       session.flash('success', 'Login efetuado com sucesso!')
-      return response.redirect().toPath('/')
+      return response.redirect().toRoute('index')
     } catch (error) {
       session.flashAll()
       session.flash('error', 'Usuário e/ou senha inválido!')

@@ -42,14 +42,17 @@ const databaseConfig: DatabaseConfig = {
         password: Env.get('PG_PASSWORD', ''),
         database: Env.get('PG_DB_NAME'),
       },
+      pool: {
+        min: 1,
+        max: 4,
+      },
       migrations: {
         naturalSort: true,
       },
       healthCheck: false,
       debug: false,
     },
-
-  }
+  },
 }
 
 export default databaseConfig
