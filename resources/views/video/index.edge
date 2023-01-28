@@ -6,11 +6,13 @@
 @!alertError()
 
 <div class="flex flex-wrap items-center justify-center">
-  @each(row in videos)
+  @each((row, i) in videos)
   @!video.card({
     id: row.id,
     url_code: row.url_code,
-    title: row.title.length > 45 ? row.title.substring(0,42) + '...' : row.title,
+    title: row.title,
+    creator: `${row.author.first_name} ${row.author.last_name}`,
+    time: row.create_at
   })
   @endeach
 </div>

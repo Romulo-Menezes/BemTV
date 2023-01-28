@@ -1,13 +1,13 @@
 <a href="{{ route('video/show', { id }) }}" class="m-3">
-  <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <img class="w-[97%] m-1 rounded-lg" src="https://img.youtube.com/vi/{{ url_code }}/mqdefault.jpg" alt="thumb image"/>
-    <div class="pl-5">
-        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ title }}</h5>
+  <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <img class="p-8 rounded-t-lg" src="https://img.youtube.com/vi/{{ url_code }}/mqdefault.jpg" alt="thumb image"/>
+    <div class="px-5 pb-5">
+        <h5 class="w-[300px] md:w-full text-xl font-semibold tracking-tight text-gray-900 dark:text-white truncate overflow-hidden">{{ title }}</h5>
         <div class="flex items-center">
           <img class="rounded-full w-9 h-9" src="https://cdn-icons-png.flaticon.com/512/3011/3011270.png" alt="image description">
           <div class="flex flex-col pl-2">
             <p class="font-normal text-gray-700 dark:text-gray-400">{{ creator }}</p>
-            <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">2 days ago</p>
+            <p class="mb-2 font-normal text-gray-700 dark:text-gray-400">{{ time }}</p>
           </div>
         </div>
     </div>
