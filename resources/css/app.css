@@ -4,46 +4,15 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
 
-body{
-    background-color: #1F1D2C;
+.box {
+	width: 100%;
+	padding-top: 56.25%;
+	position: relative;
 }
-
-span{
-    color: white;
-}
-
-h5{
-    color: white;
-}
-
-#iconWhite {
-    color: white;
-}
-
-#bgMain{
-    background-color: #1F1D2C;
-}
-
-#searchBG{
-    background-color: #363342;
-}
-
-#cardBG {
-    background-color: #262837;
-}
-
-#pagination{
-    background-color: #363342;
-    color: white;
-    border: 0ch;
-}
-
-#paginationSelect{
-    background-color: #3b82f6;
-    color: white;
-    border: 0ch;
-}
-
-#svgShowVideo{
-    color: #999aa8;
+.box iframe {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
