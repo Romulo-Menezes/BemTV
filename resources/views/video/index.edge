@@ -12,7 +12,8 @@
     url_code: video.url_code,
     title: video.title,
     creator: `${video.author.first_name} ${video.author.last_name}`,
-    time: video.createdAt.toLocaleString()
+    time: video.createdAt.toLocaleString(),
+    views: video.views
   })
   @endeach
 </div>
