@@ -21,9 +21,12 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
+  Route.get('/historico', 'HistoriesController.index').as('history/index')
+
   Route.get('/enviar-video', 'VideosController.create').as('video/create')
   Route.post('/enviar-video', 'VideosController.store').as('video/store')
 
+  Route.get('/seus-videos', 'UsersController.videos').as('user/videos')
   Route.get('/editar-perfil', 'UsersController.edit').as('user/edit')
   Route.post('/editar-perfil', 'UsersController.update').as('user/update')
 }).middleware('auth')

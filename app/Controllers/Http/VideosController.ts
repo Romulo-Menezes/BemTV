@@ -2,6 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 import VideoValidator from 'App/Validators/VideoValidator'
+import HistoriesController from './HistoriesController'
 export default class VideosController {
   public async index({ view, request, response, session }: HttpContextContract) {
     const page = request.input('page', 1)
@@ -35,7 +36,7 @@ export default class VideosController {
       const user = await User.findOrFail(auth.user?.id)
       await user.related('videos').create({
         title,
-        description,
+        description: description !== undefined ? description : '',
         url_code: path,
       })
     } catch (error) {
@@ -47,11 +48,17 @@ export default class VideosController {
     return response.redirect().toRoute('index')
   }
 
-  public async show({ view, request, response, session }: HttpContextContract) {
+  public async show({ auth, request, response, session, view }: HttpContextContract) {
     const id = request.param('id')
+    let userRating
     try {
+      if (auth.isLoggedIn && auth.user !== undefined) {
+        userRating = HistoriesController.getRating(auth.user.id, id)
+      }
       const video = await Video.query().preload('author').where('id', id).firstOrFail()
-      return view.render('video/show', { video })
+      video.views++
+      video.save()
+      return view.render('video/show', { video, userRating })
     } catch (e) {
       if (e.message === 'E_ROW_NOT_FOUND: Row not found') {
         session.flash('error', 'Vídeo não encontrado!')
