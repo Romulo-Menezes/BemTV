@@ -1,0 +1,35 @@
+<div class="justify-between -mx-4 mb-1 flex flex-row bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+  <a href="{{ route('video/show', { id }) }}">
+    <div class="flex flex-row">
+      <img class="w-[130px] h-[73.13px] rounded-lg" src="https://img.youtube.com/vi/{{ url_code }}/mqdefault.jpg" alt="video_thumb">
+      <div class="flex flex-col truncate">
+        <h5 class="dark:text-white text-base font-medium align-middle px-4 truncate">{{ title }}</h5>
+        <div class="flex flex-row items-center px-4 truncate">
+          <svg class="stroke-gray-900 dark:stroke-white mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          <p class="dark:text-white text-base font-base align-middle truncate">{{ views }}</p>
+        </div>
+        <div class="flex flex-row items-center px-4 truncate">
+            {{--  like  --}}
+            <svg class="stroke-gray-900 dark:stroke-white mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+            <p class="dark:text-white text-base font-base align-middle pr-6 truncate">{{ likes }}</p>
+            {{--  dislike  --}}
+            <svg class="stroke-gray-900 dark:stroke-white mr-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path></svg>
+            <p class="dark:text-white text-base font-base align-middle truncate">{{ dislikes }}</p>
+        </div>
+      </div>
+    </div>
+  </a>
+  @if(menu)
+  <button id="dropdownMenuIconButton" data-dropdown-toggle="dropdownDots" class="inline-flex items-center text-gray-900 dark:text-white" type="button">
+    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path></svg>
+  </button>
+  <!-- Dropdown menu -->
+  <div id="dropdownDots" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+      <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton">
+        <li>
+          <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Deletar</a>
+        </li>
+      </ul>
+  </div>
+  @endif
+</div>
