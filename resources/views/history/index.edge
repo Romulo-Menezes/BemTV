@@ -7,13 +7,11 @@
 
 <div class="flex flex-wrap items-center justify-center">
   @each(video in videos)
-  @!video.card({
+  @!video.cardH({
     id: video.id,
     url_code: video.url_code,
     title: video.title,
-    creator: ' ',
-    time: video.createdAt.toLocaleString(),
-    views: video.views
+    views: video.views,
   })
   @endeach
 </div>
