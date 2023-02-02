@@ -18,7 +18,7 @@
       </a>
       @endif
     </li>
-    @each(anchor in data.getUrlsForRange(data.currentPage + sideLimit > data.lastPage ? data.lastPage - limit + 1 : Math.max(data.currentPage - sideLimit , data.firstPage), data.lastPage < limit ? data.lastPage : data.currentPage < sideLimit + 1 ? limit : Math.min(data.currentPage + sideLimit, data.lastPage)))
+    @each(anchor in data.getUrlsForRange(data.currentPage + sideLimit > data.lastPage ? Math.max(data.lastPage - limit + 1, data.firstPage) : Math.max(data.currentPage - sideLimit , data.firstPage), data.lastPage < limit ? data.lastPage : data.currentPage < sideLimit + 1 ? limit : Math.min(data.currentPage + sideLimit, data.lastPage)))
       <li>
         @if(anchor.page === data.currentPage)
         <a href="{{ anchor.url }}" id="paginationSelect"
