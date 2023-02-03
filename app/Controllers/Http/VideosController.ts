@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import History from 'App/Models/History'
 import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 import VideoValidator from 'App/Validators/VideoValidator'
@@ -66,6 +67,64 @@ export default class VideosController {
         session.flash('error', e.message)
       }
       response.redirect().toRoute('index')
+    }
+  }
+
+  public async like({ auth, request, response }: HttpContextContract) {
+    const id = request.param('id')
+    let isLiked = false
+    if (auth.user !== undefined && auth.isLoggedIn) {
+      const history = await History.query()
+        .where('user_id', auth.user.id)
+        .andWhere('video_id', id)
+        .firstOrFail()
+      if (history.liked) {
+        history.liked = false
+        isLiked = false
+      } else {
+        history.liked = true
+        history.disliked = false
+        isLiked = true
+      }
+      let video = await Video.query().where('id', id).firstOrFail()
+      video.likes = (
+        await History.query().where('video_id', id).andWhere('liked', true).count('* as total')
+      )[0].$extras.total
+      video.dislikes = (
+        await History.query().where('video_id', id).andWhere('disliked', true).count('* as total')
+      )[0].$extras.total
+      video.save()
+      history.save()
+      return response.json({ isLiked })
+    }
+  }
+
+  public async dislike({ auth, request, response }: HttpContextContract) {
+    const id = request.param('id')
+    let isDisliked = false
+    if (auth.user !== undefined && auth.isLoggedIn) {
+      const history = await History.query()
+        .where('user_id', auth.user.id)
+        .andWhere('video_id', id)
+        .firstOrFail()
+      if (history.disliked) {
+        history.disliked = false
+        isDisliked = false
+      } else {
+        history.disliked = true
+        history.liked = false
+        isDisliked = true
+      }
+      let video = await Video.query().where('id', id).firstOrFail()
+      video.likes = (
+        await History.query().where('video_id', id).andWhere('liked', true).count('* as total')
+      )[0].$extras.total
+      video.dislikes = (
+        await History.query().where('video_id', id).andWhere('disliked', true).count('* as total')
+      )[0].$extras.total
+      video.save()
+      history.save()
+      return response.json({ isDisliked })
     }
   }
 }

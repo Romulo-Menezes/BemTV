@@ -38,6 +38,18 @@ Route.get('/assistir/:id', 'VideosController.show')
     cast: (id) => Number(id),
   })
   .as('video/show')
+Route.post('/assistir/:id/like', 'VideosController.like')
+  .where('id', {
+    match: /^[0-9]+$/,
+    cast: (id) => Number(id),
+  })
+  .as('rating/like')
+Route.post('/assistir/:id/dislike', 'VideosController.dislike')
+  .where('id', {
+    match: /^[0-9]+$/,
+    cast: (id) => Number(id),
+  })
+  .as('rating/dislike')
 
 Route.get('/login', 'AuthController.create').as('auth/create')
 Route.post('/login', 'AuthController.store').as('auth/store')
