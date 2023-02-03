@@ -127,4 +127,25 @@ export default class VideosController {
       return response.json({ isDisliked })
     }
   }
+
+  public async likeds({ auth, view, request, response, session }: HttpContextContract) {
+    const page = request.input('page', 1)
+    const limit = 16
+    if (auth.user !== undefined) {
+      const histories = await History.query()
+        .where('user_id', auth.user.id)
+        .andWhere('liked', true)
+        .preload('video')
+        .orderBy('updated_at', 'desc')
+        .paginate(page, limit)
+      if (page > histories.lastPage) {
+        session.flash('error', 'Você tentou acessar uma página inexistente!')
+        return response.redirect().toRoute('index')
+      }
+      const videos = histories.map((histories) => histories.video)
+      return view.render('video/likeds', { histories, videos })
+    } else {
+      return response.redirect().toRoute('auth/create')
+    }
+  }
 }

@@ -1,0 +1,21 @@
+@layout('layouts/main')
+@set('title', 'Marcados com gostei')
+
+@section('body')
+@!alertSuccess()
+@!alertError()
+
+<div class="flex flex-wrap items-center justify-center">
+  @each(video in videos)
+  @!video.cardH({
+    id: video.id,
+    url_code: video.url_code,
+    title: video.title,
+    views: video.views,
+  })
+  @endeach
+</div>
+<div class="mb-6">
+  @!pageNav({data: histories, sideLimit: 3, limit: 7})
+</div>
+@endsection
