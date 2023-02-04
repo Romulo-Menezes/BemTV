@@ -17,6 +17,6 @@
   @endeach
 </div>
 <div class="mb-6">
-  @!pageNav({data: videos, sideLimit: 3, limit: 7})
+  @!pageNav({data: videos, sideLimit: 3, limit: 7, route: route('user/videos')})
 </div>
 @endsection

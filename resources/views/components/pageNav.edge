@@ -21,13 +21,13 @@
     @each(anchor in data.getUrlsForRange(data.currentPage + sideLimit > data.lastPage ? Math.max(data.lastPage - limit + 1, data.firstPage) : Math.max(data.currentPage - sideLimit , data.firstPage), data.lastPage < limit ? data.lastPage : data.currentPage < sideLimit + 1 ? limit : Math.min(data.currentPage + sideLimit, data.lastPage)))
       <li>
         @if(anchor.page === data.currentPage)
-        <a href="{{ anchor.url }}" id="paginationSelect"
+        <a href="{{ route }}{{ anchor.url }}" id="paginationSelect"
         class="z-10 px-3 py-2 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
         >
         {{ anchor.page }}
         </a>
         @else
-        <a href="{{ anchor.url }}" id="pagination"
+        <a href="{{ route }}{{ anchor.url }}" id="pagination"
         class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
         >
         {{ anchor.page }}
