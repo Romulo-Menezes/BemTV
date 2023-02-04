@@ -43,12 +43,8 @@
             headers: { 'Content-Type': 'application/json' }
           })
           response.json().then(data => {
-            if (data.isLiked) {
-              likesNum.innerHTML = {{video.likes + 1}}
-              dislikesNum.innerHTML = {{ video.dislikes }}
-            } else {
-              likesNum.innerHTML = {{ video.likes }}
-            }
+            likesNum.innerHTML = data.likes
+            dislikesNum.innerHTML = data.dislikes
           })
         })
 
@@ -58,12 +54,8 @@
             headers: { 'Content-Type': 'application/json' }
           })
           response.json().then(data => {
-            if (data.isDisliked) {
-              dislikesNum.innerHTML = {{video.dislikes + 1}}
-              likesNum.innerHTML = {{video.likes }}
-            } else {
-              dislikesNum.innerHTML = {{ video.dislikes }}
-            }
+            likesNum.innerHTML = data.likes
+            dislikesNum.innerHTML = data.dislikes
           })
         })
       </script>

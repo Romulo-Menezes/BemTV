@@ -74,18 +74,19 @@ export default class VideosController {
     const id = request.param('id')
     let isLiked = false
     if (auth.user !== undefined && auth.isLoggedIn) {
-      const history = await History.query()
+      let history = await History.query()
         .where('user_id', auth.user.id)
         .andWhere('video_id', id)
         .firstOrFail()
-      if (history.liked) {
-        history.liked = false
-        isLiked = false
-      } else {
-        history.liked = true
+      if (history.disliked) {
         history.disliked = false
+        history.liked = true
         isLiked = true
+      } else {
+        history.liked = !history.liked
+        isLiked = !history.liked
       }
+      history.save()
       let video = await Video.query().where('id', id).firstOrFail()
       video.likes = (
         await History.query().where('video_id', id).andWhere('liked', true).count('* as total')
@@ -94,8 +95,7 @@ export default class VideosController {
         await History.query().where('video_id', id).andWhere('disliked', true).count('* as total')
       )[0].$extras.total
       video.save()
-      history.save()
-      return response.json({ isLiked })
+      return response.json({ isLiked, likes: video.likes, dislikes: video.dislikes })
     }
   }
 
@@ -103,18 +103,19 @@ export default class VideosController {
     const id = request.param('id')
     let isDisliked = false
     if (auth.user !== undefined && auth.isLoggedIn) {
-      const history = await History.query()
+      let history = await History.query()
         .where('user_id', auth.user.id)
         .andWhere('video_id', id)
         .firstOrFail()
-      if (history.disliked) {
-        history.disliked = false
-        isDisliked = false
-      } else {
-        history.disliked = true
+      if (history.liked) {
         history.liked = false
+        history.disliked = true
         isDisliked = true
+      } else {
+        history.disliked = !history.disliked
+        isDisliked = !history.disliked
       }
+      history.save()
       let video = await Video.query().where('id', id).firstOrFail()
       video.likes = (
         await History.query().where('video_id', id).andWhere('liked', true).count('* as total')
@@ -123,8 +124,7 @@ export default class VideosController {
         await History.query().where('video_id', id).andWhere('disliked', true).count('* as total')
       )[0].$extras.total
       video.save()
-      history.save()
-      return response.json({ isDisliked })
+      return response.json({ isDisliked, likes: video.likes, dislikes: video.dislikes })
     }
   }
 
