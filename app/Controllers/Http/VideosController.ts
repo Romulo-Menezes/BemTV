@@ -135,7 +135,9 @@ export default class VideosController {
       const histories = await History.query()
         .where('user_id', auth.user.id)
         .andWhere('liked', true)
-        .preload('video')
+        .preload('video', (videoQuery) => {
+          videoQuery.preload('author')
+        })
         .orderBy('updated_at', 'desc')
         .paginate(page, limit)
       if (page > histories.lastPage) {

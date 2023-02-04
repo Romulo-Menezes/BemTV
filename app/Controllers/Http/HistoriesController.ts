@@ -10,7 +10,9 @@ export default class HistoriesController {
     if (auth.user !== undefined) {
       const histories = await History.query()
         .where('user_id', auth.user.id)
-        .preload('video')
+        .preload('video', (videoQuery) => {
+          videoQuery.preload('author')
+        })
         .orderBy('created_at', 'desc')
         .paginate(page, limit)
       if (page > histories.lastPage) {
