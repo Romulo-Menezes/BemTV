@@ -6,7 +6,7 @@ export default class VideoValidator {
 
   public schema = schema.create({
     title: schema.string([rules.trim()]),
-    description: schema.string([rules.trim()]),
+    description: schema.string.nullable({}, [rules.trim()]),
     url: schema.string([
       rules.trim(),
       rules.regex(

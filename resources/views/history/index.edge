@@ -1,5 +1,5 @@
 @layout('layouts/main')
-@set('title', 'Home')
+@set('title', 'Histórico')
 
 @section('body')
 @!alertSuccess()
@@ -7,17 +7,17 @@
 
 <div class="flex flex-wrap items-center justify-center">
   @each(video in videos)
-  @!video.card({
+  @!video.cardH({
     id: video.id,
     url_code: video.url_code,
     title: video.title,
+    views: video.views,
     creator: `${video.author.first_name} ${video.author.last_name}`,
-    time: video.createdAt.toLocaleString(),
-    views: video.views
+    time: video.createdAt.toLocaleString()
   })
   @endeach
 </div>
 <div class="mb-6">
-  @!pageNav({data: videos, sideLimit: 3, limit: 7, route: route('index')})
+  @!pageNav({data: histories, sideLimit: 3, limit: 7, route: route('history/index')})
 </div>
 @endsection

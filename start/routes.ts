@@ -21,9 +21,13 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
+  Route.get('/historico', 'HistoriesController.index').as('history/index')
+
   Route.get('/enviar-video', 'VideosController.create').as('video/create')
   Route.post('/enviar-video', 'VideosController.store').as('video/store')
+  Route.get('/playlist/gostei', 'VideosController.likeds').as('video/likeds')
 
+  Route.get('/seus-videos', 'UsersController.videos').as('user/videos')
   Route.get('/editar-perfil', 'UsersController.edit').as('user/edit')
   Route.post('/editar-perfil', 'UsersController.update').as('user/update')
 }).middleware('auth')
@@ -35,6 +39,18 @@ Route.get('/assistir/:id', 'VideosController.show')
     cast: (id) => Number(id),
   })
   .as('video/show')
+Route.post('/assistir/:id/like', 'VideosController.like')
+  .where('id', {
+    match: /^[0-9]+$/,
+    cast: (id) => Number(id),
+  })
+  .as('rating/like')
+Route.post('/assistir/:id/dislike', 'VideosController.dislike')
+  .where('id', {
+    match: /^[0-9]+$/,
+    cast: (id) => Number(id),
+  })
+  .as('rating/dislike')
 
 Route.get('/login', 'AuthController.create').as('auth/create')
 Route.post('/login', 'AuthController.store').as('auth/store')
