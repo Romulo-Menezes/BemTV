@@ -6,14 +6,14 @@ import LoginValidator from 'App/Validators/LoginValidator'
 export default class AuthController {
   public async create({ view, response, auth }: HttpContextContract) {
     if (auth.isLoggedIn) {
-      return response.redirect().back()
+      return response.redirect().toRoute('/')
     }
     return view.render('auth/create')
   }
 
   public async store({ auth, request, session, response }: HttpContextContract) {
     if (auth.isLoggedIn) {
-      return response.redirect().back()
+      return response.redirect().toRoute('/')
     }
     const payload = await request.validate(LoginValidator)
     const { email, password } = payload
