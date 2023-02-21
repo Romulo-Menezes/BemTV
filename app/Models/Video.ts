@@ -18,7 +18,7 @@ export default class Video extends BaseModel {
   public title: string
 
   @column()
-  public description: string | null
+  public description: string
 
   @column()
   public url_code: string

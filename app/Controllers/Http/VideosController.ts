@@ -37,7 +37,7 @@ export default class VideosController {
       const user = await User.findOrFail(auth.user?.id)
       await user.related('videos').create({
         title,
-        description: description !== undefined ? description : '',
+        description: description ?? '',
         url_code: path,
       })
     } catch (error) {
