@@ -18,5 +18,6 @@ export default class VideoValidator {
 
   public messages: CustomMessages = {
     'url.regex': 'Só é aceito links de vídeos do YouTube!',
+    'required': 'Você precisa preencher este campo!',
   }
 }
