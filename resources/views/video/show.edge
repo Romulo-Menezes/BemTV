@@ -38,9 +38,14 @@
         const dislikesNum = document.getElementById('dislikes-number')
 
         likeBtn.addEventListener('click', async ()=>{
-          const response = await fetch("{{route('rating/like', {id: video.id})}}", {
+          const rating = {
+            liked: true,
+            disliked: false
+          }
+          const response = await fetch("{{route('rating', {id: video.id})}}", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(rating)
           })
           response.json().then(data => {
             likesNum.innerHTML = data.likes
@@ -49,9 +54,14 @@
         })
 
         dislikeBtn.addEventListener('click', async ()=>{
-          const response = await fetch("{{route('rating/dislike', {id: video.id})}}", {
+          const rating = {
+            liked: false,
+            disliked: true
+          }
+          const response = await fetch("{{route('rating', {id: video.id})}}", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(rating)
           })
           response.json().then(data => {
             likesNum.innerHTML = data.likes

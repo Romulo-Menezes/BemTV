@@ -25,13 +25,16 @@ export default class HistoriesController {
       return response.redirect().toRoute('auth/create')
     }
   }
-  public static async addToHistory(userId, videoId) {
+  public static async create(userId: number, videoId: number) {
     const user = await User.findOrFail(userId)
     await user.related('history').create({
       video_id: videoId,
     })
   }
-  public static async getRating(userId, videoId): Promise<{ liked: boolean; disliked: boolean }> {
+  public static async show(
+    userId: number,
+    videoId: number
+  ): Promise<{ liked: boolean; disliked: boolean }> {
     const history = await History.query()
       .where('user_id', userId)
       .andWhere('video_id', videoId)
@@ -39,7 +42,7 @@ export default class HistoriesController {
     if (history !== null) {
       return { liked: history.liked, disliked: history.disliked }
     } else {
-      this.addToHistory(userId, videoId)
+      this.create(userId, videoId)
       return { liked: false, disliked: false }
     }
   }

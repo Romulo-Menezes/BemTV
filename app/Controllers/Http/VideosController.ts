@@ -53,12 +53,12 @@ export default class VideosController {
     const id = request.param('id')
     let userRating
     try {
-      if (auth.isLoggedIn && auth.user !== undefined) {
-        userRating = HistoriesController.getRating(auth.user.id, id)
-      }
       const video = await Video.query().preload('author').where('id', id).firstOrFail()
       video.views++
       video.save()
+      if (auth.isLoggedIn && auth.user !== undefined) {
+        userRating = HistoriesController.show(auth.user.id, id)
+      }
       return view.render('video/show', { video, userRating })
     } catch (e) {
       if (e.message === 'E_ROW_NOT_FOUND: Row not found') {
@@ -67,64 +67,6 @@ export default class VideosController {
         session.flash('error', e.message)
       }
       response.redirect().toRoute('index')
-    }
-  }
-
-  public async like({ auth, request, response }: HttpContextContract) {
-    const id = request.param('id')
-    let isLiked = false
-    if (auth.user !== undefined && auth.isLoggedIn) {
-      let history = await History.query()
-        .where('user_id', auth.user.id)
-        .andWhere('video_id', id)
-        .firstOrFail()
-      if (history.disliked) {
-        history.disliked = false
-        history.liked = true
-        isLiked = true
-      } else {
-        history.liked = !history.liked
-        isLiked = !history.liked
-      }
-      history.save()
-      let video = await Video.query().where('id', id).firstOrFail()
-      video.likes = (
-        await History.query().where('video_id', id).andWhere('liked', true).count('* as total')
-      )[0].$extras.total
-      video.dislikes = (
-        await History.query().where('video_id', id).andWhere('disliked', true).count('* as total')
-      )[0].$extras.total
-      video.save()
-      return response.json({ isLiked, likes: video.likes, dislikes: video.dislikes })
-    }
-  }
-
-  public async dislike({ auth, request, response }: HttpContextContract) {
-    const id = request.param('id')
-    let isDisliked = false
-    if (auth.user !== undefined && auth.isLoggedIn) {
-      let history = await History.query()
-        .where('user_id', auth.user.id)
-        .andWhere('video_id', id)
-        .firstOrFail()
-      if (history.liked) {
-        history.liked = false
-        history.disliked = true
-        isDisliked = true
-      } else {
-        history.disliked = !history.disliked
-        isDisliked = !history.disliked
-      }
-      history.save()
-      let video = await Video.query().where('id', id).firstOrFail()
-      video.likes = (
-        await History.query().where('video_id', id).andWhere('liked', true).count('* as total')
-      )[0].$extras.total
-      video.dislikes = (
-        await History.query().where('video_id', id).andWhere('disliked', true).count('* as total')
-      )[0].$extras.total
-      video.save()
-      return response.json({ isDisliked, likes: video.likes, dislikes: video.dislikes })
     }
   }
 
