@@ -19,18 +19,30 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 Route.group(() => {
   Route.get('/historico', 'HistoriesController.index').as('history/index')
-
-  Route.get('/enviar-video', 'VideosController.create').as('video/create')
-  Route.post('/enviar-video', 'VideosController.store').as('video/store')
 
   Route.get('/playlist/:slug', 'PlaylistsController.index')
     .where('slug', /^[a-z0-9_-]+$/)
     .as('playlist/index')
 
+  Route.get('/enviar-video', 'UserVideosController.create').as('video/create')
+  Route.post('/enviar-video', 'UserVideosController.store').as('video/store')
   Route.get('/seus-videos', 'UserVideosController.index').as('user/videos')
+  Route.get('/seus-videos/:id/deletar', 'UserVideosController.edit')
+    .where('id', {
+      match: /^[0-9]+$/,
+      cast: (id) => Number(id),
+    })
+    .as('video/edit')
+  Route.post('/seus-videos/:id/deletar', 'UserVideosController.destroy')
+    .where('id', {
+      match: /^[0-9]+$/,
+      cast: (id) => Number(id),
+    })
+    .as('video/destroy')
 
   Route.get('/editar-perfil', 'UsersController.edit').as('user/edit')
   Route.post('/editar-perfil', 'UsersController.update').as('user/update')
@@ -56,3 +68,7 @@ Route.get('/logout', 'AuthController.destroy').as('auth/destroy')
 
 Route.get('/cadastro', 'UsersController.create').as('user/create')
 Route.post('/cadastro', 'UsersController.store').as('user/store')
+
+Route.get('*', async ({ response }: HttpContextContract) => {
+  return response.status(404).send({ message: 'Página não encontrada' })
+})
