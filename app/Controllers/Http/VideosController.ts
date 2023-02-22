@@ -1,5 +1,4 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import History from 'App/Models/History'
 import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 import VideoValidator from 'App/Validators/VideoValidator'
@@ -23,7 +22,7 @@ export default class VideosController {
     return view.render('video/create')
   }
 
-  public async store({ response, request, auth, session }: HttpContextContract) {
+  public async store({ auth, response, request, session }: HttpContextContract) {
     const payload = await request.validate(VideoValidator)
     const { title, description, url } = payload
     let path
@@ -67,29 +66,6 @@ export default class VideosController {
         session.flash('error', e.message)
       }
       response.redirect().toRoute('index')
-    }
-  }
-
-  public async likeds({ auth, view, request, response, session }: HttpContextContract) {
-    const page = request.input('page', 1)
-    const limit = 16
-    if (auth.user !== undefined) {
-      const histories = await History.query()
-        .where('user_id', auth.user.id)
-        .andWhere('liked', true)
-        .preload('video', (videoQuery) => {
-          videoQuery.preload('author')
-        })
-        .orderBy('updated_at', 'desc')
-        .paginate(page, limit)
-      if (page > histories.lastPage) {
-        session.flash('error', 'Você tentou acessar uma página inexistente!')
-        return response.redirect().toRoute('index')
-      }
-      const videos = histories.map((histories) => histories.video)
-      return view.render('video/likeds', { histories, videos })
-    } else {
-      return response.redirect().toRoute('auth/create')
     }
   }
 }

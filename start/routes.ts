@@ -25,9 +25,13 @@ Route.group(() => {
 
   Route.get('/enviar-video', 'VideosController.create').as('video/create')
   Route.post('/enviar-video', 'VideosController.store').as('video/store')
-  Route.get('/playlist/gostei', 'VideosController.likeds').as('video/likeds')
 
-  Route.get('/seus-videos', 'UsersController.videos').as('user/videos')
+  Route.get('/playlist/:slug', 'PlaylistsController.index')
+    .where('slug', /^[a-z0-9_-]+$/)
+    .as('playlist/index')
+
+  Route.get('/seus-videos', 'UserVideosController.index').as('user/videos')
+
   Route.get('/editar-perfil', 'UsersController.edit').as('user/edit')
   Route.post('/editar-perfil', 'UsersController.update').as('user/update')
 }).middleware('auth')
