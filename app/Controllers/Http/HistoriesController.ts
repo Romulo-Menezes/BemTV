@@ -2,6 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import History from 'App/Models/History'
 import User from 'App/Models/User'
+import moment from 'moment'
 
 export default class HistoriesController {
   public async index({ auth, view, request, response, session }: HttpContextContract) {
@@ -20,7 +21,11 @@ export default class HistoriesController {
         return response.redirect().toRoute('index')
       }
       const videos = histories.map((histories) => histories.video)
-      return view.render('history/index', { videos, histories })
+      const times: string[] = videos.map((videos) => {
+        moment.locale('pt-br')
+        return moment(videos.createdAt.toRFC2822()).fromNow()
+      })
+      return view.render('history/index', { videos, histories, times })
     } else {
       return response.redirect().toRoute('auth/create')
     }

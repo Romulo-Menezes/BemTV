@@ -4,6 +4,7 @@ import Video from 'App/Models/Video'
 import Hash from '@ioc:Adonis/Core/Hash'
 import VideoValidator from 'App/Validators/VideoValidator'
 import History from 'App/Models/History'
+import moment from 'moment'
 
 export default class UserVideosController {
   public async index({ auth, request, response, session, view }: HttpContextContract) {
@@ -20,7 +21,11 @@ export default class UserVideosController {
         session.flash('error', 'Você tentou acessar uma página inexistente!')
         return response.redirect().toRoute('index')
       }
-      return view.render('userVideos/index', { videos })
+      const times: string[] = videos.map((videos) => {
+        moment.locale('pt-br')
+        return moment(videos.createdAt.toRFC2822()).fromNow()
+      })
+      return view.render('userVideos/index', { videos, times })
     } else {
       return response.redirect().toRoute('auth/create')
     }

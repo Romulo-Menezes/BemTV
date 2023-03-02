@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Video from 'App/Models/Video'
+import moment from 'moment'
 import HistoriesController from './HistoriesController'
 export default class VideosController {
   public async index({ view, request, response, session }: HttpContextContract) {
@@ -13,7 +14,11 @@ export default class VideosController {
       session.flash('error', 'Você tentou acessar uma página inexistente!')
       return response.redirect().toRoute('index')
     }
-    return view.render('video/index', { videos })
+    const times: string[] = videos.map((videos) => {
+      moment.locale('pt-br')
+      return moment(videos.createdAt.toRFC2822()).fromNow()
+    })
+    return view.render('video/index', { videos, times })
   }
 
   public async show({ auth, request, response, session, view }: HttpContextContract) {

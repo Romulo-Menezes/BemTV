@@ -6,13 +6,13 @@
 @!alertError()
 
 <div class="flex flex-wrap items-center justify-center">
-  @each(video in videos)
+  @each((video, index) in videos)
   @!video.card({
     id: video.id,
     url_code: video.url_code,
     title: video.title,
     creator: `${video.author.first_name} ${video.author.last_name}`,
-    time: video.createdAt.toLocaleString(),
+    time: times[index],
     views: video.views
   })
   @endeach

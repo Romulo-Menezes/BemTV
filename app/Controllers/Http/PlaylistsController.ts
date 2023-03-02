@@ -1,5 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import History from 'App/Models/History'
+import moment from 'moment'
 
 export default class PlaylistsController {
   public async index({ auth, view, request, response, session }: HttpContextContract) {
@@ -22,7 +23,11 @@ export default class PlaylistsController {
         return response.redirect().toRoute('index')
       }
       const videos = histories.map((histories) => histories.video)
-      return view.render('playlist/index', { histories, videos })
+      const times: string[] = videos.map((videos) => {
+        moment.locale('pt-br')
+        return moment(videos.createdAt.toRFC2822()).fromNow()
+      })
+      return view.render('playlist/index', { histories, videos, times })
     } else {
       return response.redirect().toRoute('auth/create')
     }
