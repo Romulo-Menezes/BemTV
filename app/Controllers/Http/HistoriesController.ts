@@ -5,7 +5,7 @@ import User from 'App/Models/User'
 import moment from 'moment'
 
 export default class HistoriesController {
-  public async index({ auth, view, request, response, session }: HttpContextContract) {
+  public async index({ auth, view, request, response }: HttpContextContract) {
     const page = request.input('page', 1)
     const limit = 16
     if (auth.user !== undefined) {
@@ -17,8 +17,7 @@ export default class HistoriesController {
         .orderBy('created_at', 'desc')
         .paginate(page, limit)
       if (page > histories.lastPage) {
-        session.flash('error', 'Você tentou acessar uma página inexistente!')
-        return response.redirect().toRoute('index')
+        return response.redirect().toRoute('not-found')
       }
       const videos = histories.map((histories) => histories.video)
       const times: string[] = videos.map((videos) => {

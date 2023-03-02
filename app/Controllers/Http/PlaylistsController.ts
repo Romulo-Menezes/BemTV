@@ -3,7 +3,7 @@ import History from 'App/Models/History'
 import moment from 'moment'
 
 export default class PlaylistsController {
-  public async index({ auth, view, request, response, session }: HttpContextContract) {
+  public async index({ auth, view, request, response }: HttpContextContract) {
     const page = request.input('page', 1)
     const slug = request.param('slug')
     console.log(slug)
@@ -19,8 +19,7 @@ export default class PlaylistsController {
         .orderBy('updated_at', 'desc')
         .paginate(page, limit)
       if (page > histories.lastPage) {
-        session.flash('error', 'Você tentou acessar uma página inexistente!')
-        return response.redirect().toRoute('index')
+        return response.redirect().toRoute('not-found')
       }
       const videos = histories.map((histories) => histories.video)
       const times: string[] = videos.map((videos) => {

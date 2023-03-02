@@ -69,6 +69,9 @@ Route.get('/logout', 'AuthController.destroy').as('auth/destroy')
 Route.get('/cadastro', 'UsersController.create').as('user/create')
 Route.post('/cadastro', 'UsersController.store').as('user/store')
 
+Route.get('/error-404', async ({ view }: HttpContextContract) => {
+  return view.render('errors/not-found')
+}).as('not-found')
 Route.get('*', async ({ response }: HttpContextContract) => {
-  return response.status(404).send({ message: 'Página não encontrada' })
+  return response.redirect().toRoute('not-found')
 })

@@ -3,7 +3,7 @@ import Video from 'App/Models/Video'
 import moment from 'moment'
 import HistoriesController from './HistoriesController'
 export default class VideosController {
-  public async index({ view, request, response, session }: HttpContextContract) {
+  public async index({ view, request, response }: HttpContextContract) {
     const page = request.input('page', 1)
     const limit = 16
     const videos = await Video.query()
@@ -11,8 +11,7 @@ export default class VideosController {
       .orderBy('created_at', 'desc')
       .paginate(page, limit)
     if (page > videos.lastPage) {
-      session.flash('error', 'Você tentou acessar uma página inexistente!')
-      return response.redirect().toRoute('index')
+      return response.redirect().toRoute('not-found')
     }
     const times: string[] = videos.map((videos) => {
       moment.locale('pt-br')
@@ -38,7 +37,7 @@ export default class VideosController {
       } else {
         session.flash('error', e.message)
       }
-      response.redirect().toRoute('index')
+      return response.redirect().toRoute('not-found')
     }
   }
 }

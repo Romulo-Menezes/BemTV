@@ -7,7 +7,7 @@ import History from 'App/Models/History'
 import moment from 'moment'
 
 export default class UserVideosController {
-  public async index({ auth, request, response, session, view }: HttpContextContract) {
+  public async index({ auth, request, response, view }: HttpContextContract) {
     const page = request.input('page', 1)
     const limit = 16
     let videos
@@ -18,8 +18,7 @@ export default class UserVideosController {
         .orderBy('created_at', 'desc')
         .paginate(page, limit)
       if (page > videos.lastPage) {
-        session.flash('error', 'Você tentou acessar uma página inexistente!')
-        return response.redirect().toRoute('index')
+        return response.redirect().toRoute('not-found')
       }
       const times: string[] = videos.map((videos) => {
         moment.locale('pt-br')
