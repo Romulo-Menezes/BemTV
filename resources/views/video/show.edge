@@ -15,22 +15,53 @@
       </div>
     </div>
     <div class="flex flex-row">
-      <button id="like-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-l-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-        <svg class="stroke-gray-900 dark:stroke-gray-400 mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+      @if(userRating.liked)
+
+      <button id="like-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 bg-yellow-300 rounded-l-full border border-gray-200 hover:bg-yellow-400 hover:text-white hover:stroke-white stroke-gray-900 dark:stroke-white dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-yellow-400 hover:dark:stroke-white">
+        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
         </svg>
         <div id="likes-number">
           {{video.likes}}
         </div>
       </button>
-      <button id="dislike-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-r-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-        <svg class="stroke-gray-900 dark:stroke-gray-400 mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+
+      @else
+
+      <button id="like-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 bg-white rounded-l-full border border-gray-200 hover:bg-yellow-400 hover:text-white hover:stroke-white stroke-gray-900 dark:stroke-white dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-yellow-400 hover:dark:stroke-white">
+        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+        </svg>
+        <div id="likes-number">
+          {{video.likes}}
+        </div>
+      </button>
+
+      @endif
+      @if(userRating.disliked)
+
+      <button id="dislike-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 bg-yellow-300 rounded-r-full border border-gray-200 hover:bg-yellow-400 hover:text-white hover:stroke-white stroke-gray-900 dark:stroke-white dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-yellow-400 hover:dark:stroke-white">
+        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
         </svg>
         <div id="dislikes-number">
           {{video.dislikes}}
         </div>
       </button>
+
+      @else
+
+      <button id="dislike-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 bg-white rounded-r-full border border-gray-200 hover:bg-yellow-400 hover:text-white hover:stroke-white stroke-gray-900 dark:stroke-white dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-yellow-400 hover:dark:stroke-white">
+        <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+        </svg>
+        <div id="dislikes-number">
+          {{video.dislikes}}
+        </div>
+      </button>
+
+      @endif
       <script>
         const likeBtn = document.getElementById('like-button')
         const likesNum = document.getElementById('likes-number')
@@ -48,6 +79,19 @@
             body: JSON.stringify(rating)
           })
           response.json().then(data => {
+            if (data.isLiked) {
+              likeBtn.classList.add('bg-yellow-300')
+              dislikeBtn.classList.add('bg-white')
+              dislikeBtn.classList.add('dark:bg-gray-800')
+              dislikeBtn.classList.remove('bg-yellow-300')
+              likeBtn.classList.remove('bg-white')
+              likeBtn.classList.remove('dark:bg-gray-800')
+            }
+            else{
+              likeBtn.classList.add('bg-white')
+              likeBtn.classList.add('dark:bg-gray-800')
+              likeBtn.classList.remove('bg-yellow-300')
+            }
             likesNum.innerHTML = data.likes
             dislikesNum.innerHTML = data.dislikes
           })
@@ -64,6 +108,19 @@
             body: JSON.stringify(rating)
           })
           response.json().then(data => {
+            if (data.isDisliked) {
+              dislikeBtn.classList.add('bg-yellow-300')
+              likeBtn.classList.add('bg-white')
+              likeBtn.classList.add('dark:bg-gray-800')
+              likeBtn.classList.remove('bg-yellow-300')
+              dislikeBtn.classList.remove('bg-white')
+              dislikeBtn.classList.remove('dark:bg-gray-800')
+            }
+            else{
+              dislikeBtn.classList.add('bg-white')
+              dislikeBtn.classList.add('dark:bg-gray-800')
+              dislikeBtn.classList.remove('bg-yellow-300')
+            }
             likesNum.innerHTML = data.likes
             dislikesNum.innerHTML = data.dislikes
           })

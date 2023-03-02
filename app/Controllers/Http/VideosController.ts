@@ -28,7 +28,7 @@ export default class VideosController {
       video.views++
       video.save()
       if (auth.isLoggedIn && auth.user !== undefined) {
-        userRating = HistoriesController.show(auth.user.id, id)
+        userRating = await HistoriesController.show(auth.user.id, id)
       }
       return view.render('video/show', { video, userRating })
     } catch (e) {
