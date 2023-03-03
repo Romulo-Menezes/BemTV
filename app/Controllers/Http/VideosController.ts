@@ -22,7 +22,7 @@ export default class VideosController {
 
   public async show({ auth, request, response, session, view }: HttpContextContract) {
     const id = request.param('id')
-    let userRating
+    let userRating = { liked: false, disliked: false }
     try {
       const video = await Video.query().preload('author').where('id', id).firstOrFail()
       video.views++
