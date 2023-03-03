@@ -24,9 +24,8 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 Route.group(() => {
   Route.get('/historico', 'HistoriesController.index').as('history/index')
 
-  Route.get('/playlist/:slug', 'PlaylistsController.index')
-    .where('slug', /^[a-z0-9_-]+$/)
-    .as('playlist/index')
+  Route.get('/playlist/gostei', 'RatingsController.index').as('rating/index')
+  Route.get('/playlist/mais-tarde', 'LatersController.index').as('later/index')
 
   Route.get('/enviar-video', 'UserVideosController.create').as('video/create')
   Route.post('/enviar-video', 'UserVideosController.store').as('video/store')
@@ -61,6 +60,12 @@ Route.post('/assistir/:id/rating', 'RatingsController.store')
     cast: (id) => Number(id),
   })
   .as('rating')
+Route.post('/mais-tarde/:id/', 'LatersController.store')
+  .where('id', {
+    match: /^[0-9]+$/,
+    cast: (id) => Number(id),
+  })
+  .as('later/store')
 
 Route.get('/login', 'AuthController.create').as('auth/create')
 Route.post('/login', 'AuthController.store').as('auth/store')

@@ -1,9 +1,41 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import History from 'App/Models/History'
 import Video from 'App/Models/Video'
+import moment from 'moment'
 import HistoriesController from './HistoriesController'
 
 export default class RatingsController {
+  public async index({ auth, view, request, response }: HttpContextContract) {
+    const page = request.input('page', 1)
+    const limit = 16
+    if (auth.user !== undefined) {
+      const histories = await History.query()
+        .where('user_id', auth.user.id)
+        .andWhere('liked', true)
+        .preload('video', (videoQuery) => {
+          videoQuery.preload('author')
+        })
+        .orderBy('updated_at', 'desc')
+        .paginate(page, limit)
+      if (page > histories.lastPage) {
+        return response.redirect().toRoute('not-found')
+      }
+      const videos = histories.map((histories) => histories.video)
+      const times: string[] = videos.map((videos) => {
+        moment.locale('pt-br')
+        return moment(videos.createdAt.toRFC2822()).fromNow()
+      })
+      return view.render('playlist/index', {
+        data: histories,
+        videos,
+        times,
+        title: 'Marcados com gostei',
+      })
+    } else {
+      return response.redirect().toRoute('auth/create')
+    }
+  }
+
   public async store({ auth, request, response }: HttpContextContract) {
     const id = request.param('id')
     const liked = request.input('liked')

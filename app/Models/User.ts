@@ -3,6 +3,7 @@ import Hash from '@ioc:Adonis/Core/Hash'
 import { column, beforeSave, BaseModel, hasMany, HasMany } from '@ioc:Adonis/Lucid/Orm'
 import Video from './Video'
 import History from './History'
+import Later from './Later'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -38,6 +39,11 @@ export default class User extends BaseModel {
     foreignKey: 'user_id',
   })
   public history: HasMany<typeof History>
+
+  @hasMany(() => Later, {
+    foreignKey: 'user_id',
+  })
+  public laters: HasMany<typeof Later>
 
   @beforeSave()
   public static async hashPassword(user: User) {
