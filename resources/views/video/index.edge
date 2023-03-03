@@ -18,6 +18,11 @@
   @endeach
 </div>
 <div class="mb-6">
-  @!pageNav({data: videos, sideLimit: 3, limit: 7, route: route('index')})
+  @!pageNav({
+    data: videos,
+    sideLimit: 3,
+    limit: 7,
+    path: '',
+  })
 </div>
 @endsection

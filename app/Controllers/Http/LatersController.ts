@@ -30,6 +30,7 @@ export default class LatersController {
         times,
         title: 'Assistir mais tarde',
         path: Route.makeUrl('later/index'),
+        search: false,
       })
     } else {
       return response.redirect().toRoute('auth/create')

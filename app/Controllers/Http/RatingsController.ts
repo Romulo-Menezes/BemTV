@@ -32,6 +32,7 @@ export default class RatingsController {
         times,
         title: 'Marcados com gostei',
         path: Route.makeUrl('rating/index'),
+        search: false,
       })
     } else {
       return response.redirect().toRoute('auth/create')
