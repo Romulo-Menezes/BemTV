@@ -54,18 +54,22 @@ Route.get('/assistir/:id', 'VideosController.show')
     cast: (id) => Number(id),
   })
   .as('video/show')
+
 Route.post('/assistir/:id/rating', 'RatingsController.store')
   .where('id', {
     match: /^[0-9]+$/,
     cast: (id) => Number(id),
   })
   .as('rating')
+
 Route.post('/mais-tarde/:id/', 'LatersController.store')
   .where('id', {
     match: /^[0-9]+$/,
     cast: (id) => Number(id),
   })
   .as('later/store')
+
+Route.get('/resultado', 'SearchesController.index').as('search')
 
 Route.get('/login', 'AuthController.create').as('auth/create')
 Route.post('/login', 'AuthController.store').as('auth/store')
