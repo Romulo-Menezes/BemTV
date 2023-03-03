@@ -46,13 +46,13 @@ export default class LatersController {
         .first()
       if (later !== null) {
         await later.delete()
-        return response.json({ msg: 'Vídeo removido!' })
+        return response.json({ msg: 'Vídeo removido do assistir mais tarde!' })
       } else {
         const user = await User.findOrFail(auth.user.id)
         await user.related('laters').create({
           video_id: id,
         })
-        return response.json({ msg: 'Vídeo adicionado!' })
+        return response.json({ msg: 'Vídeo adicionado ao assistir mais tarde!' })
       }
     }
     return response.json({ msg: 'Você não está logado!' })
