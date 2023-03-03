@@ -3,7 +3,6 @@ import User from 'App/Models/User'
 import Video from 'App/Models/Video'
 import Hash from '@ioc:Adonis/Core/Hash'
 import VideoValidator from 'App/Validators/VideoValidator'
-import History from 'App/Models/History'
 import moment from 'moment'
 
 export default class UserVideosController {
@@ -89,7 +88,6 @@ export default class UserVideosController {
             .where('id', id)
             .andWhere('user_id', auth.user.id)
             .firstOrFail()
-          await History.query().where('video_id', id).delete()
           await video.delete()
           session.flash('success', 'Vídeo deletado!')
           return response.redirect().toRoute('user/videos')
