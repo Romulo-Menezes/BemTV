@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Route from '@ioc:Adonis/Core/Route'
 import History from 'App/Models/History'
 import Video from 'App/Models/Video'
 import moment from 'moment'
@@ -30,6 +31,7 @@ export default class RatingsController {
         videos,
         times,
         title: 'Marcados com gostei',
+        path: Route.makeUrl('rating/index'),
       })
     } else {
       return response.redirect().toRoute('auth/create')

@@ -1,4 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Route from '@ioc:Adonis/Core/Route'
 import Later from 'App/Models/Later'
 import User from 'App/Models/User'
 import moment from 'moment'
@@ -28,6 +29,7 @@ export default class LatersController {
         videos,
         times,
         title: 'Assistir mais tarde',
+        path: Route.makeUrl('later/index'),
       })
     } else {
       return response.redirect().toRoute('auth/create')
