@@ -12,7 +12,6 @@ export default class VideoValidator {
       rules.regex(
         /^(https:\/\/www\.youtube\.com\/watch\?v=)[^"&?/\s]{11}|(https:\/\/youtu\.be\/)[^"&?/\s]{11}$/
       ),
-      rules.maxLength(43),
     ]),
   })
 
