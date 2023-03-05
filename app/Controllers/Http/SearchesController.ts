@@ -5,7 +5,7 @@ import SearchValidator from 'App/Validators/SearchValidator'
 import moment from 'moment'
 
 export default class SearchesController {
-  public async index({ view, request, response, session }: HttpContextContract) {
+  public async index({ view, request, response }: HttpContextContract) {
     const page = request.input('page', 1)
     const payload = await request.validate(SearchValidator)
     const { busca } = payload
@@ -15,7 +15,7 @@ export default class SearchesController {
         .whereILike('title', '%' + busca + '%')
         .orWhereILike('description', '%' + busca + '%')
         .preload('author')
-        .orderBy('created_at', 'desc')
+        .orderBy('created_at')
         .paginate(page, limit)
       if (page > videos.lastPage) {
         return response.redirect().toRoute('not-found')
@@ -24,7 +24,6 @@ export default class SearchesController {
         moment.locale('pt-br')
         return moment(videos.createdAt.toRFC2822()).fromNow()
       })
-      session.flashAll()
       return view.render('playlist/index', {
         data: videos,
         videos,
