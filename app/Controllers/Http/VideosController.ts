@@ -30,7 +30,9 @@ export default class VideosController {
       if (auth.isLoggedIn && auth.user !== undefined) {
         userRating = await HistoriesController.show(auth.user.id, id)
       }
-      return view.render('video/show', { video, userRating })
+      moment.locale('pt-br')
+      const time = moment(video.createdAt.toRFC2822()).fromNow()
+      return view.render('video/show', { video, userRating, time })
     } catch (e) {
       if (e.message === 'E_ROW_NOT_FOUND: Row not found') {
         session.flash('error', 'Vídeo não encontrado!')
