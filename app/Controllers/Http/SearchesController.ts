@@ -28,7 +28,7 @@ export default class SearchesController {
         data: videos,
         videos,
         times,
-        title: 'Marcados com gostei',
+        title: `Busca - ${busca}`,
         path: `${Route.makeUrl('search')}?busca=${busca.replace(' ', '+')}&`,
         search: true,
       })
