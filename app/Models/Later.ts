@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
 import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
 import User from './User'
+import Video from './Video'
 
-export default class Video extends BaseModel {
+export default class Later extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
@@ -12,29 +13,19 @@ export default class Video extends BaseModel {
   @belongsTo(() => User, {
     foreignKey: 'user_id',
   })
-  public author: BelongsTo<typeof User>
+  public user: BelongsTo<typeof User>
 
   @column()
-  public title: string
+  public video_id: number
 
-  @column()
-  public description: string
-
-  @column()
-  public url_code: string
+  @belongsTo(() => Video, {
+    foreignKey: 'video_id',
+  })
+  public video: BelongsTo<typeof Video>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
-
-  @column()
-  public likes: number
-
-  @column()
-  public dislikes: number
-
-  @column()
-  public views: number
 }

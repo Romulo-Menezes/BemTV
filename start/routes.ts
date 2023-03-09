@@ -19,15 +19,30 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 Route.group(() => {
   Route.get('/historico', 'HistoriesController.index').as('history/index')
 
-  Route.get('/enviar-video', 'VideosController.create').as('video/create')
-  Route.post('/enviar-video', 'VideosController.store').as('video/store')
-  Route.get('/playlist/gostei', 'VideosController.likeds').as('video/likeds')
+  Route.get('/playlist/gostei', 'RatingsController.index').as('rating/index')
+  Route.get('/playlist/mais-tarde', 'LatersController.index').as('later/index')
 
-  Route.get('/seus-videos', 'UsersController.videos').as('user/videos')
+  Route.get('/enviar-video', 'UserVideosController.create').as('video/create')
+  Route.post('/enviar-video', 'UserVideosController.store').as('video/store')
+  Route.get('/seus-videos', 'UserVideosController.index').as('user/videos')
+  Route.get('/seus-videos/:id/deletar', 'UserVideosController.edit')
+    .where('id', {
+      match: /^[0-9]+$/,
+      cast: (id) => Number(id),
+    })
+    .as('video/edit')
+  Route.post('/seus-videos/:id/deletar', 'UserVideosController.destroy')
+    .where('id', {
+      match: /^[0-9]+$/,
+      cast: (id) => Number(id),
+    })
+    .as('video/destroy')
+
   Route.get('/editar-perfil', 'UsersController.edit').as('user/edit')
   Route.post('/editar-perfil', 'UsersController.update').as('user/update')
 }).middleware('auth')
@@ -39,18 +54,22 @@ Route.get('/assistir/:id', 'VideosController.show')
     cast: (id) => Number(id),
   })
   .as('video/show')
-Route.post('/assistir/:id/like', 'VideosController.like')
+
+Route.post('/assistir/:id/rating', 'RatingsController.store')
   .where('id', {
     match: /^[0-9]+$/,
     cast: (id) => Number(id),
   })
-  .as('rating/like')
-Route.post('/assistir/:id/dislike', 'VideosController.dislike')
+  .as('rating')
+
+Route.post('/mais-tarde/:id/', 'LatersController.store')
   .where('id', {
     match: /^[0-9]+$/,
     cast: (id) => Number(id),
   })
-  .as('rating/dislike')
+  .as('later/store')
+
+Route.get('/resultado', 'SearchesController.index').as('search')
 
 Route.get('/login', 'AuthController.create').as('auth/create')
 Route.post('/login', 'AuthController.store').as('auth/store')
@@ -58,3 +77,10 @@ Route.get('/logout', 'AuthController.destroy').as('auth/destroy')
 
 Route.get('/cadastro', 'UsersController.create').as('user/create')
 Route.post('/cadastro', 'UsersController.store').as('user/store')
+
+Route.get('/error-404', async ({ view }: HttpContextContract) => {
+  return view.render('errors/not-found')
+}).as('not-found')
+Route.get('*', async ({ response }: HttpContextContract) => {
+  return response.redirect().toRoute('not-found')
+})

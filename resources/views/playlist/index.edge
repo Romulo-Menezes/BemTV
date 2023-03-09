@@ -1,23 +1,23 @@
 @layout('layouts/main')
-@set('title', 'Marcados com gostei')
+@set('title', title)
 
 @section('body')
 @!alertSuccess()
 @!alertError()
 
 <div class="flex flex-wrap items-center justify-center">
-  @each(video in videos)
-  @!video.cardH({
+  @each((video, index) in videos)
+  @!video.card({
     id: video.id,
     url_code: video.url_code,
     title: video.title,
     views: video.views,
     creator: `${video.author.first_name} ${video.author.last_name}`,
-    time: video.createdAt.toLocaleString()
+    time: times[index]
   })
   @endeach
 </div>
 <div class="mb-6">
-  @!pageNav({data: histories, sideLimit: 3, limit: 7,route: route('video/likeds')})
+  @!pageNav({ data, sideLimit: 3, limit: 7,path, search })
 </div>
 @endsection

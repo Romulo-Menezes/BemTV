@@ -3,7 +3,6 @@ import User from 'App/Models/User'
 import Hash from '@ioc:Adonis/Core/Hash'
 import CreateUserValidator from 'App/Validators/CreateUserValidator'
 import UpdateUserValidator from 'App/Validators/UpdateUserValidator'
-import Video from 'App/Models/Video'
 
 export default class UsersController {
   public async create({ view, auth, response }: HttpContextContract) {
@@ -57,25 +56,6 @@ export default class UsersController {
       console.log(error.messages)
       session.flash('error', 'Ocorreu um erro ao tentar editar.')
       return response.redirect().back()
-    }
-  }
-  public async videos({ auth, view, request, response, session }: HttpContextContract) {
-    const page = request.input('page', 1)
-    const limit = 16
-    let videos
-    if (auth.user !== undefined) {
-      videos = await Video.query()
-        .where('user_id', auth.user.id)
-        .preload('author')
-        .orderBy('created_at', 'desc')
-        .paginate(page, limit)
-      if (page > videos.lastPage) {
-        session.flash('error', 'Você tentou acessar uma página inexistente!')
-        return response.redirect().toRoute('index')
-      }
-      return view.render('user/videos', { videos })
-    } else {
-      return response.redirect().toRoute('auth/create')
     }
   }
 }

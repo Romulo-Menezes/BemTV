@@ -11,54 +11,134 @@
       <img class="rounded-full w-10 h-10 mr-3" src="https://cdn-icons-png.flaticon.com/512/3011/3011270.png" alt="image description">
       <div class="flex flex-col">
         <p class="text-black dark:text-white font-medium">{{`${video.author.first_name} ${video.author.last_name}`}}</p>
-        <p class="text-black dark:text-white">{{ video.createdAt.toLocaleString() }}</p>
+        <p class="text-black dark:text-white">{{ `Enviado ${time}` }}</p>
       </div>
     </div>
-    <div class="flex flex-row">
-      <button id="like-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-l-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-        <svg class="stroke-gray-900 dark:stroke-gray-400 mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-        </svg>
-        <div id="likes-number">
-          {{video.likes}}
-        </div>
-      </button>
-      <button id="dislike-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-r-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-        <svg class="stroke-gray-900 dark:stroke-gray-400 mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
-        </svg>
-        <div id="dislikes-number">
-          {{video.dislikes}}
-        </div>
-      </button>
-      <script>
-        const likeBtn = document.getElementById('like-button')
-        const likesNum = document.getElementById('likes-number')
-        const dislikeBtn = document.getElementById('dislike-button')
-        const dislikesNum = document.getElementById('dislikes-number')
+    <div class="flex flex-col">
+      <div class="flex flex-row">
+        <button id="btn{{video.id}}" type="button" class="flex felx-row items-center py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-black focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+          <svg class="mr-2 stroke-black dark:stroke-white" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+          <p class="hidden md:flex">Assistir mais tarde</p>
+        </button>
+        <script>
+          document
+          .getElementById('btn{{video.id}}')
+          .addEventListener('click', async ()=>{
+            const response = await fetch("{{route('later/store', {id: video.id})}}", {
+              method: "POST",
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({id: "{{video.id}}"})
+            })
+            response.json().then(data => {
+              document.getElementById('alertMsg').innerHTML = data.msg
+              document.getElementById('alert-border-1').classList.remove('hidden')
+            })
+          })
+        </script>
+        @if(userRating.liked)
+        <button id="like-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 bg-yellow-300 rounded-l-full border border-gray-200 hover:bg-yellow-400 hover:text-white hover:stroke-white stroke-gray-900 dark:stroke-white dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-yellow-400 hover:dark:stroke-white">
+          <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+          </svg>
+          <div id="likes-number">
+            {{video.likes}}
+          </div>
+        </button>
+        @else
+        <button id="like-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 bg-white rounded-l-full border border-gray-200 hover:bg-yellow-400 hover:text-white hover:stroke-white stroke-gray-900 dark:stroke-white dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-yellow-400 hover:dark:stroke-white">
+          <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+          </svg>
+          <div id="likes-number">
+            {{video.likes}}
+          </div>
+        </button>
+        @endif
+        @if(userRating.disliked)
+        <button id="dislike-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 bg-yellow-300 rounded-r-full border border-gray-200 hover:bg-yellow-400 hover:text-white hover:stroke-white stroke-gray-900 dark:stroke-white dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-yellow-400 hover:dark:stroke-white">
+          <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+          </svg>
+          <div id="dislikes-number">
+            {{video.dislikes}}
+          </div>
+        </button>
+        @else
+        <button id="dislike-button" type="button" class="flex flex-row py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 bg-white rounded-r-full border border-gray-200 hover:bg-yellow-400 hover:text-white hover:stroke-white stroke-gray-900 dark:stroke-white dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-yellow-400 hover:dark:stroke-white">
+          <svg class="mr-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+          </svg>
+          <div id="dislikes-number">
+            {{video.dislikes}}
+          </div>
+        </button>
+        @endif
+        <script>
+          const likeBtn = document.getElementById('like-button')
+          const likesNum = document.getElementById('likes-number')
+          const dislikeBtn = document.getElementById('dislike-button')
+          const dislikesNum = document.getElementById('dislikes-number')
 
-        likeBtn.addEventListener('click', async ()=>{
-          const response = await fetch("{{route('rating/like', {id: video.id})}}", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' }
+          likeBtn.addEventListener('click', async ()=>{
+            const rating = {
+              liked: true,
+              disliked: false
+            }
+            const response = await fetch("{{route('rating', {id: video.id})}}", {
+              method: "POST",
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(rating)
+            })
+            response.json().then(data => {
+              if (data.isLiked) {
+                likeBtn.classList.add('bg-yellow-300')
+                dislikeBtn.classList.add('bg-white')
+                dislikeBtn.classList.add('dark:bg-gray-800')
+                dislikeBtn.classList.remove('bg-yellow-300')
+                likeBtn.classList.remove('bg-white')
+                likeBtn.classList.remove('dark:bg-gray-800')
+              }
+              else{
+                likeBtn.classList.add('bg-white')
+                likeBtn.classList.add('dark:bg-gray-800')
+                likeBtn.classList.remove('bg-yellow-300')
+              }
+              likesNum.innerHTML = data.likes
+              dislikesNum.innerHTML = data.dislikes
+            })
           })
-          response.json().then(data => {
-            likesNum.innerHTML = data.likes
-            dislikesNum.innerHTML = data.dislikes
-          })
-        })
 
-        dislikeBtn.addEventListener('click', async ()=>{
-          const response = await fetch("{{route('rating/dislike', {id: video.id})}}", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' }
+          dislikeBtn.addEventListener('click', async ()=>{
+            const rating = {
+              liked: false,
+              disliked: true
+            }
+            const response = await fetch("{{route('rating', {id: video.id})}}", {
+              method: "POST",
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(rating)
+            })
+            response.json().then(data => {
+              if (data.isDisliked) {
+                dislikeBtn.classList.add('bg-yellow-300')
+                likeBtn.classList.add('bg-white')
+                likeBtn.classList.add('dark:bg-gray-800')
+                likeBtn.classList.remove('bg-yellow-300')
+                dislikeBtn.classList.remove('bg-white')
+                dislikeBtn.classList.remove('dark:bg-gray-800')
+              }
+              else{
+                dislikeBtn.classList.add('bg-white')
+                dislikeBtn.classList.add('dark:bg-gray-800')
+                dislikeBtn.classList.remove('bg-yellow-300')
+              }
+              likesNum.innerHTML = data.likes
+              dislikesNum.innerHTML = data.dislikes
+            })
           })
-          response.json().then(data => {
-            likesNum.innerHTML = data.likes
-            dislikesNum.innerHTML = data.dislikes
-          })
-        })
-      </script>
+        </script>
+      </div>
+      <p class="text-black text-center dark:text-white font-medium">{{ video.views }} visualizações</p>
     </div>
   </div>
   <p class="font-normal whitespace-pre-line text-gray-700 dark:text-gray-400">{{video.description}}</p>

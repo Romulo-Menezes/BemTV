@@ -1,21 +1,59 @@
-<a href="{{ route('video/show', { id }) }}" class="flex items-stretch m-2 bg-white dark:bg-gray-800 shadow-md">
+<div class="flex items-stretch m-2 bg-white dark:bg-gray-800 shadow-md">
   <div class="flex flex-col">
-    <img src="https://img.youtube.com/vi/{{ url_code }}/mqdefault.jpg" alt="thumb image"/>
+    <a href="{{ route('video/show', { id }) }}">
+      <img src="https://img.youtube.com/vi/{{ url_code }}/mqdefault.jpg" alt="thumb image"/>
+    </a>
     <div class="p-2">
-      <h5 class="w-[304px] text-xl font-semibold tracking-tight text-gray-900 dark:text-white truncate overflow-hidden">{{ title }}</h5>
-      <div class="flex items-center">
-        <img class="rounded-full w-9 h-9" src="https://cdn-icons-png.flaticon.com/512/3011/3011270.png" alt="image description">
-        <div class="flex flex-col pl-2">
-          <p class="font-normal text-gray-700 dark:text-gray-400">{{ creator }}</p>
-          <div class="flex flex-row items-center">
-            <p class="mr-2 font-normal text-gray-700 dark:text-gray-400">{{ views }}</p>
-            <svg class="mr-2 stroke-gray-900 dark:stroke-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            <p class="mr-2 font-normal text-gray-700 dark:text-gray-400">•</p>
-            <p class="mr-2 font-normal text-gray-700 dark:text-gray-400">{{ time }}</p>
-            <svg class="mr-4 stroke-gray-900 dark:stroke-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+      <a href="{{ route('video/show', { id }) }}">
+        <h5 title="{{ title }}" class="w-[304px] text-xl font-semibold tracking-tight text-gray-900 dark:text-white truncate overflow-hidden">{{ title }}</h5>
+      </a>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <img class="rounded-full w-9 h-9" src="https://cdn-icons-png.flaticon.com/512/3011/3011270.png" alt="image description">
+          <div class="flex flex-col pl-2">
+            <p class="font-normal text-gray-700 dark:text-gray-400">{{ creator }}</p>
+            <div class="flex flex-row items-center">
+              <p class="mr-2 font-normal text-gray-700 dark:text-gray-400">{{ views }}</p>
+              <svg class="mr-2 stroke-gray-900 dark:stroke-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <p class="mr-2 font-normal text-gray-700 dark:text-gray-400">•</p>
+              <p class="mr-2 font-normal text-gray-700 dark:text-gray-400">{{ time }}</p>
+              <svg class="mr-4 stroke-gray-900 dark:stroke-gray-400" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
           </div>
         </div>
+        <button id="dropdownMenuIconButton{{id}}" data-dropdown-toggle="dropdownDots{{id}}" class="text-gray-900 dark:text-white" type="button">
+          <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+          </svg>
+        </button>
+        <div id="dropdownDots{{id}}" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-auto dark:bg-gray-700 dark:divide-gray-600">
+          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton{{id}}">
+            <li>
+              <button id="btn{{ id }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Assistir mais tarde</button>
+            </li>
+            @if(del)
+              <li>
+                <a href="{{ route('video/edit', { id }) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Deletar</a>
+              </li>
+              @endif
+          </ul>
+      </div>
       </div>
     </div>
   </div>
-</a>
+</div>
+<script>
+  document
+  .getElementById('btn{{id}}')
+  .addEventListener('click', async ()=>{
+    const response = await fetch("{{route('later/store', {id})}}", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({id: "{{id}}"})
+    })
+    response.json().then(data => {
+      document.getElementById('alertMsg').innerHTML = data.msg
+      document.getElementById('alert-border-1').classList.remove('hidden')
+    })
+  })
+</script>

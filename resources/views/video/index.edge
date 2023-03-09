@@ -6,18 +6,23 @@
 @!alertError()
 
 <div class="flex flex-wrap items-center justify-center">
-  @each(video in videos)
+  @each((video, index) in videos)
   @!video.card({
     id: video.id,
     url_code: video.url_code,
     title: video.title,
     creator: `${video.author.first_name} ${video.author.last_name}`,
-    time: video.createdAt.toLocaleString(),
+    time: times[index],
     views: video.views
   })
   @endeach
 </div>
 <div class="mb-6">
-  @!pageNav({data: videos, sideLimit: 3, limit: 7, route: route('index')})
+  @!pageNav({
+    data: videos,
+    sideLimit: 3,
+    limit: 7,
+    path: '',
+  })
 </div>
 @endsection
