@@ -1,12 +1,12 @@
-<div class="flex items-stretch md:w-full w-[343px] mb-2 mr-2 md:mr-0 bg-white dark:bg-gray-800 shadow-md">
-  <div class="w-full truncate overflow-hidden">
+{{--  <div class="flex items-stretch md:w-full w-[343px] mb-2 mr-2 md:mr-0 bg-white dark:bg-gray-800 shadow-md">
+  <div class="w-full">
     <div class="flex flex-col md:flex-row">
-      <a href="{{ route('video/show', { id }) }}">
-        <img class="w-[343px] md:w-[210px]" src="https://img.youtube.com/vi/{{ url_code }}/mqdefault.jpg" alt="thumb image"/>
+      <a class="w-[343px] md:w-[210px]" href="{{ route('video/show', { id }) }}">
+        <img class="w-full" src="https://img.youtube.com/vi/{{ url_code }}/mqdefault.jpg" alt="thumb image"/>
       </a>
-      <div class="p-2">
+      <div class="flex felx-line p-2 truncate">
         <a href="{{ route('video/show', { id }) }}">
-          <h5 title="{{ title }}" class="w-full text-xl font-semibold tracking-tight text-gray-900 dark:text-white truncate overflow-hidden">{{ title }}</h5>
+          <h5 title="{{ title }}" class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white truncate overflow-hidden">{{ title }}</h5>
         </a>
         <div class="flex items-center">
           <img class="md:hidden rounded-full w-9 h-9" src="https://cdn-icons-png.flaticon.com/512/3011/3011270.png" alt="image description">
@@ -24,30 +24,30 @@
             </div>
           </div>
         </div>
+        <div class="inline-flex items-center ">
+          <button id="dropdownMenuIconButton{{id}}" data-dropdown-toggle="dropdownDots{{id}}" class="text-gray-900 dark:text-white md:px-2" type="button">
+            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+            </svg>
+          </button>
+          <!-- Dropdown menu -->
+          <div id="dropdownDots{{id}}" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-auto dark:bg-gray-700 dark:divide-gray-600">
+              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton{{id}}">
+                @if(del)
+                <li>
+                  <a href="{{ route('video/edit', { id }) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Deletar</a>
+                </li>
+                @endif
+                <li>
+                  <button id="btn{{ id }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Assistir mais tarde</button>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   </div>
-  <div class="inline-flex items-center ">
-    <button id="dropdownMenuIconButton{{id}}" data-dropdown-toggle="dropdownDots{{id}}" class="text-gray-900 dark:text-white md:px-2" type="button">
-      <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
-      </svg>
-    </button>
-    <!-- Dropdown menu -->
-    <div id="dropdownDots{{id}}" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-auto dark:bg-gray-700 dark:divide-gray-600">
-        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconButton{{id}}">
-          @if(del)
-          <li>
-            <a href="{{ route('video/edit', { id }) }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Deletar</a>
-          </li>
-          @endif
-          <li>
-            <button id="btn{{ id }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Assistir mais tarde</button>
-          </li>
-        </ul>
-    </div>
-  </div>
-</div>
 <script>
   document
   .getElementById('btn{{id}}')
@@ -62,4 +62,4 @@
       document.getElementById('alert-border-1').classList.remove('hidden')
     })
   })
-</script>
+</script>  --}}
