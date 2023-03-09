@@ -9,14 +9,9 @@ export default class CreateUserValidator {
       rules.maxLength(32),
       rules.trim(),
       rules.escape(),
-      rules.regex(/^[a-zA-ZÀ-ÿ]$/),
+      rules.alpha(),
     ]),
-    lastName: schema.string({}, [
-      rules.maxLength(32),
-      rules.trim(),
-      rules.escape(),
-      rules.regex(/^[a-zA-ZÀ-ÿ]$/),
-    ]),
+    lastName: schema.string({}, [rules.maxLength(32), rules.trim(), rules.escape(), rules.alpha()]),
     email: schema.string({}, [
       rules.email(),
       rules.normalizeEmail({
@@ -36,10 +31,10 @@ export default class CreateUserValidator {
 
   public messages: CustomMessages = {
     'firstName.required': 'Seu nome é obrigatório para o cadastro!',
-    'firstName.regex': 'Seu nome deve conter apenas letras!',
+    'firstName.alpha': 'Seu nome deve conter apenas letras!',
     'firstName.maxLength': 'O tamanho máximo de um nome é de 32 caracteres.',
     'lastName.required': 'Seu sobrenome é obrigatório para o cadastro!',
-    'lastName.regex': 'Seu sobrenome deve conter apenas letras!',
+    'lastName.alpha': 'Seu sobrenome deve conter apenas letras!',
     'lastName.maxLength': 'O tamanho máximo de um sobrenome é de 32 caracteres.',
     'email.required': 'Seu e-mail é obrigatório para o cadastro!',
     'email.unique': 'Endereço de e-mail já cadastrado!',
