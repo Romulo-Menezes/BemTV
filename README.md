@@ -1,7 +1,7 @@
 <div align="center">
 
 <h1> 
-  <img src="./docs/BemTV.png" width="350px"/>
+  <img src="./docs/BemTv.png" width="350px"/>
 </h1>
 
 </div>
